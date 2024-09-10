@@ -20,7 +20,6 @@ export const postUser = (user: User) => {
 export const getListsByUserId = (user_id: string) => {
   return apiClient.get(`/users/${user_id}/lists`)
   .then(({ data }) => {
-    console.log(data)
     return data;
   })
   
