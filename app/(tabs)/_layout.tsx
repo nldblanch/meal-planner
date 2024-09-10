@@ -2,7 +2,13 @@ import React from "react";
 import { Tabs } from "expo-router";
 import { Image, Text, View } from "react-native";
 import { icons } from "@/constants";
-const TabIcon = ({ icon, color, name, focused }) => {
+type Args = {
+  icon: any;
+  color: string;
+  name: string;
+  focused: boolean;
+};
+const TabIcon = ({ icon, color, name, focused }: Args) => {
   return (
     <View className="flex items-center justify-center gap-2">
       <Image
