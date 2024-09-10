@@ -5,7 +5,7 @@ import { useGlobalContext } from "@/contexts/GlobalProvider";
 import { getAuth } from "firebase/auth";
 import { router } from "expo-router";
 const Bookmark = () => {
-  const { setUser } = useGlobalContext();
+  const { user, setUser } = useGlobalContext();
   const auth = getAuth()
 
   const logout = () => {
@@ -16,7 +16,7 @@ const Bookmark = () => {
   return (
     <SafeAreaView>
       <View>
-        <Text>Welcome back!</Text>
+        <Text>Welcome back {user.uid}!</Text>
       </View>
       <Button title="Log out" onPress={logout} />
     </SafeAreaView>
