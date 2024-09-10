@@ -18,9 +18,12 @@ export const postUser = (user: User) => {
 };
 
 export const getListsByUserId = (user_id: string) => {
-  return apiClient.get(`/users/${user_id}/lists`).then(({ data }) => {
+  return apiClient.get(`/users/${user_id}/lists`)
+  .then(({ data }) => {
+    console.log(data)
     return data;
-  });
+  })
+  
 };
 
 export const addListToUserId = (user_id: string, list_name: string) => {
@@ -34,7 +37,7 @@ export const addListToUserId = (user_id: string, list_name: string) => {
         return data;
       })
       .catch((err) => {
-        console.log(err);
+        console.log(err, "trying to post user");
       });
   }
 };

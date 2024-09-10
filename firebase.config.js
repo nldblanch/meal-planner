@@ -8,8 +8,7 @@ const firebaseConfig = JSON.parse(process.env.EXPO_PUBLIC_FIREBASE_CONFIG);
 // Initialize Firebase
 export const firebaseApp = initializeApp(firebaseConfig);
 
-export const auth = initializeAuth(firebaseApp);
+export const auth = initializeAuth(firebaseApp, {
+    persistence: getReactNativePersistence(ReactNativeAsyncStorage),
+  });
 
-// , {
-//   persistence: getReactNativePersistence(ReactNativeAsyncStorage),
-// }

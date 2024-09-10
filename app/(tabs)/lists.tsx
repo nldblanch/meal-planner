@@ -10,6 +10,7 @@ const Lists = () => {
   
 
   useEffect(() => {
+    console.log(user)
     getListsByUserId(user.uid)
       .then((result) => {
         console.log(result);

@@ -6,7 +6,7 @@ const GlobalProvider = ({ children }) => {
   const [signedIn, dispatchSignedIn] = useReducer(SignInReducer,{
     userToken:null,
 });
-  const [user, setUser] = useState({id: ""});
+  const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
