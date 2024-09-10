@@ -6,14 +6,22 @@ import { useEffect } from "react";
 import { useGlobalContext } from "@/contexts/GlobalProvider";
 
 export default function App() {
-  const auth = getAuth()
-  const {user, setUser} = useGlobalContext()
+  const auth = getAuth();
+  const { user, setUser, dispatchSignedIn } = useGlobalContext();
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         setUser(user);
-        router.replace("/(tabs)/home")
-
+        dispatchSignedIn({
+          type: "UPDATE_SIGN_IN",
+          payload: { userToken: "signed-in" },
+        });
+        router.replace("/(tabs)/home");
+      } else {
+        dispatchSignedIn({
+          type: "UPDATE_SIGN_IN",
+          payload: { userToken: null },
+        });
       }
     });
   }, [user]);
@@ -26,10 +34,11 @@ export default function App() {
           title="Get started"
           onPress={() => {
             if (user) {
-              router.replace("/(tabs)/home")
+              router.replace("/(tabs)/home");
             } else {
-              router.push("/(auth)")}}
+              router.push("/(auth)");
             }
+          }}
         />
       </View>
     </SafeAreaView>

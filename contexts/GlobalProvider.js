@@ -1,11 +1,13 @@
-import { createContext, useContext, useEffect, useState } from "react";
-
+import { createContext, useContext, useEffect, useReducer, useState } from "react";
+import { SignInReducer } from '../reducers/authReducer'
 const GlobalContext = createContext();
 export const useGlobalContext = () => useContext(GlobalContext);
 const GlobalProvider = ({ children }) => {
-  const [isLogged, setIsLogged] = useState(false);
+  const [signedIn, dispatchSignedIn] = useReducer(SignInReducer,{
+    userToken:null,
+});
   const [user, setUser] = useState({id: ""});
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     // getCurrentUser()
@@ -29,11 +31,12 @@ const GlobalProvider = ({ children }) => {
   return (
     <GlobalContext.Provider
       value={{
-        isLogged,
-        setIsLogged,
+        signedIn,
+        dispatchSignedIn,
         user,
         setUser,
         loading,
+        setLoading
       }}
     >
       {children}

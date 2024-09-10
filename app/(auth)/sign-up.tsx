@@ -5,21 +5,30 @@ import React, { useState } from "react";
 import { StyleSheet, Text, TextInput, Button, Alert, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useGlobalContext } from "@/contexts/GlobalProvider";
+import { postUser } from "@/scripts/api";
 
 export default function SignUp() {
   const [email, onChangeEmail] = useState<string>("");
   const [password, onChangePassword] = useState<string>("");
-  const { setUser, setIsLogged } = useGlobalContext();
+  const { setUser } = useGlobalContext();
 
   const auth = getAuth();
-
+  
   const createUser = () => {
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const id = userCredential.user.uid;
-        setUser({id})
-        setIsLogged(true)
-        router.replace("/(tabs)/home");
+        const userBody = {
+          user_id: id,
+					first_name: "Nathan",
+					last_name: "Blanch",
+					displayName: "Nathan Blanch",
+					avatarURL: "https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg"
+				};
+				return Promise.all([userCredential, postUser(userBody)])
+        .then(([userCredential]) => {
+          setUser(userCredential)
+        })
       })
       .catch((error) => {
         const errorCode = error.code;
