@@ -3,7 +3,6 @@ import React from "react";
 import { Tabs } from "expo-router";
 
 const AuthLayout = () => {
-  
   return (
     <>
       <Tabs
@@ -17,23 +16,22 @@ const AuthLayout = () => {
           },
         }}
       >
-          <Tabs.Screen
-            name="index"
-            options={{
-              title: "Login",
-              headerShown: false,
-              tabBarIcon: ({ color, focused }) => (
-                <Text
-                  className={`text-xl ${
-                    focused ? "text-black" : "text-gray-400"
-                  }`}
-                >
-                  Login
-                </Text>
-              ),
-            }}
-          />
-            
+        <Tabs.Screen
+          name="index"
+          options={{
+            title: "Login",
+            headerShown: false,
+            tabBarIcon: ({ color, focused }) => (
+              <Text
+                className={`text-xl ${
+                  focused ? "text-black" : "text-gray-400"
+                }`}
+              >
+                Login
+              </Text>
+            ),
+          }}
+        />
 
         <Tabs.Screen
           name="sign-up"
@@ -42,15 +40,15 @@ const AuthLayout = () => {
             headerShown: false,
             tabBarIcon: ({ color, focused }) => (
               <Text
-              className={`text-xl ${
-                focused ? "text-black" : "text-gray-400"
-              }`}
+                className={`text-xl ${
+                  focused ? "text-black" : "text-gray-400"
+                }`}
               >
                 Register
               </Text>
             ),
           }}
-          />
+        />
       </Tabs>
     </>
   );

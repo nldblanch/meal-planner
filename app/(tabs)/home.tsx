@@ -9,7 +9,7 @@ const Bookmark = () => {
   return (
     <SafeAreaView>
       <View>
-        <Text>{user.id}</Text>
+        <Text>Welcome back!</Text>
       </View>
     </SafeAreaView>
   );

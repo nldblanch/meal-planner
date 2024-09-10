@@ -1,10 +1,5 @@
 import "../../firebase.config";
-import ReactNativeAsyncStorage from "@react-native-async-storage/async-storage";
-import {
-  getAuth,
-  setPersistence,
-  signInWithEmailAndPassword,
-} from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { router } from "expo-router";
 import React, { useState } from "react";
 import { Text, TextInput, Button, View, Alert } from "react-native";
@@ -19,7 +14,7 @@ export default function SignIn() {
   const login = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then(async (userCredential) => {
-        userCredential
+        userCredential;
         setUser(userCredential);
         setIsLogged(true);
         router.replace("/(tabs)/home");
