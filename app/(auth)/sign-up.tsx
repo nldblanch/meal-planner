@@ -16,8 +16,8 @@ export default function SignUp() {
   const createUser = () => {
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        const user = userCredential.user;
-        setUser(user)
+        const id = userCredential.user.uid;
+        setUser({id})
         setIsLogged(true)
         router.replace("/(tabs)/home");
       })

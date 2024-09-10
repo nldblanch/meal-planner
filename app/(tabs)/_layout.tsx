@@ -1,7 +1,5 @@
-import { View, Text, Image } from "react-native";
 import React from "react";
-import { Tabs, Redirect } from "expo-router";
-import { icons } from "../../constants";
+import { Tabs } from "expo-router";
 
 
 const TabsLayout = () => {
@@ -12,6 +10,22 @@ const TabsLayout = () => {
           name="home"
           options={{
             title: "Home",
+            headerShown: false,
+            
+          }}
+        />
+        <Tabs.Screen
+          name="lists"
+          options={{
+            title: "Shopping Lists",
+            headerShown: false,
+            
+          }}
+        />
+        <Tabs.Screen
+          name="recipes"
+          options={{
+            title: "Recipes",
             headerShown: false,
             
           }}

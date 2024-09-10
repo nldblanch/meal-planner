@@ -1,5 +1,5 @@
-import { Animated, StyleSheet, Text } from "react-native";
-import React, { useRef } from "react";
+import { Text } from "react-native";
+import React from "react";
 import { Tabs } from "expo-router";
 
 const AuthLayout = () => {
