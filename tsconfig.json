@@ -13,5 +13,5 @@
     "**/*.tsx",
     ".expo/types/**/*.ts",
     "expo-env.d.ts"
-, "constants/index.js", "constants/icons.js", "constants/Colors.js", "components/Login.tsx", "app/index.jsx"  ]
+, "constants/index.js", "constants/icons.js", "constants/Colors.js", "components/Login.tsx", "app/index.jsx", "contexts/GlobalProvider.js"  ]
 }

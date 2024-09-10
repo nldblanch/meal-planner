@@ -1,21 +1,20 @@
 import "../../firebase.config";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { router } from "expo-router";
 import React, { useState } from "react";
-import { StyleSheet, Text, TextInput, Button, Alert, View } from "react-native";
+import { Text, TextInput, Button, View, Alert } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useGlobalContext } from "@/contexts/GlobalProvider";
 
-export default function SignUp() {
-  const [email, onChangeEmail] = useState<string>("");
-  const [password, onChangePassword] = useState<string>("");
+export default function SignIn() {
+  const [email, onChangeEmail] = useState("");
+  const [password, onChangePassword] = useState("");
   const { setUser, setIsLogged } = useGlobalContext();
-
   const auth = getAuth();
 
-  const createUser = () => {
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
+  const login = () => {
+    signInWithEmailAndPassword(auth, email, password)
+      .then(async (userCredential) => {
         const user = userCredential.user;
         setUser(user)
         setIsLogged(true)
@@ -24,9 +23,8 @@ export default function SignUp() {
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        console.log(errorMessage);
-        if (errorCode === "auth/email-already-in-use") {
-          Alert.alert("Error", "Email already in use.");
+        if (errorCode === "auth/invalid-credential") {
+          Alert.alert("Error", "Invalid email or password.");
         }
       });
   };
@@ -46,42 +44,13 @@ export default function SignUp() {
         value={password}
         secureTextEntry={true}
       ></TextInput>
-      <Button title="Sign up" onPress={createUser} />
+      <Button title="Login" onPress={login} />
       <View className="mt-8">
         <Button
-          title="Already got an account? Login."
-          onPress={() => router.back()}
+          title="Not a member? Sign up."
+          onPress={() => router.push("/(auth)/sign-up")}
         />
       </View>
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  input: {
-    height: 40,
-    width: 200,
-    margin: 12,
-    borderWidth: 1,
-    padding: 10,
-  },
-
-  fadingContainer: {
-    padding: 20,
-    backgroundColor: "powderblue",
-  },
-  fadingText: {
-    fontSize: 28,
-  },
-  buttonRow: {
-    flexBasis: 100,
-    justifyContent: "space-evenly",
-    marginVertical: 16,
-  },
-});
