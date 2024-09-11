@@ -1,0 +1,53 @@
+[
+  {
+    "alarms": [],
+    "allDay": false,
+    "availability": "notSupported",
+    "calendarId": "B5FF0A63-66F2-40A7-9506-1790EE4508F3",
+    "creationDate": "2024-09-11T17:29:13.918Z",
+    "endDate": "2024-09-11T07:00:00.000Z",
+    "id": "8CAE7F09-FD24-443B-87DD-7C3783CDEE06",
+    "isDetached": false,
+    "lastModifiedDate": "2024-09-11T17:29:13.919Z",
+    "originalStartDate": "2024-09-11T06:00:00.000Z",
+    "startDate": "2024-09-11T06:00:00.000Z",
+    "status": "none",
+    "timeZone": "GMT",
+    "title": "Breakfast: Cereal",
+    "url": ""
+  },
+  {
+    "alarms": [],
+    "allDay": false,
+    "availability": "notSupported",
+    "calendarId": "B5FF0A63-66F2-40A7-9506-1790EE4508F3",
+    "creationDate": "2024-09-11T17:29:30.684Z",
+    "endDate": "2024-09-11T12:00:00.000Z",
+    "id": "88A75A71-45DE-4122-8A4B-960DBBCD4EE8",
+    "isDetached": false,
+    "lastModifiedDate": "2024-09-11T17:29:30.684Z",
+    "originalStartDate": "2024-09-11T11:00:00.000Z",
+    "startDate": "2024-09-11T11:00:00.000Z",
+    "status": "none",
+    "timeZone": "GMT",
+    "title": "Lunch: Sandwiches",
+    "url": ""
+  },
+  {
+    "alarms": [],
+    "allDay": false,
+    "availability": "notSupported",
+    "calendarId": "B5FF0A63-66F2-40A7-9506-1790EE4508F3",
+    "creationDate": "2024-09-11T17:29:45.409Z",
+    "endDate": "2024-09-11T17:00:00.000Z",
+    "id": "C5D148F3-8204-4C27-957D-7E1AFED1BCF4",
+    "isDetached": false,
+    "lastModifiedDate": "2024-09-11T17:29:45.409Z",
+    "originalStartDate": "2024-09-11T16:00:00.000Z",
+    "startDate": "2024-09-11T16:00:00.000Z",
+    "status": "none",
+    "timeZone": "GMT",
+    "title": "Dinner: Jacket Potatoes",
+    "url": ""
+  }
+]
