@@ -6,14 +6,13 @@ type List = {
     isPrivate: boolean;
     list_name: string;
 }
-function ListDropdown({data, setListItems} : any) {
+function ListDropdown({data, setListId} : any) {
 
   return (
     <SelectDropdown
     data={data}
     onSelect={(selectedItem, index) => {
-      console.log(selectedItem, index);
-      //fetch items from list and setListItems(items)
+      setListId(selectedItem.list_id)
     }}
     renderButton={(selectedItem, isOpened) => {
       return (

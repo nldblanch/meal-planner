@@ -22,7 +22,6 @@ export const getListsByUserId = (user_id: string) => {
   .then(({ data }) => {
     return data;
   })
-  
 };
 
 export const addListToUserId = (user_id: string, list_name: string) => {
@@ -40,3 +39,17 @@ export const addListToUserId = (user_id: string, list_name: string) => {
       });
   }
 };
+
+export const getListItems = (list_id: string) => {
+  return apiClient.get(`/lists/${list_id}`)
+  .then(({ data }) => {
+    return data.list.items;
+  })
+}
+
+export const addItemToList = (list_id: string, item_name: string, amount=1) => {
+  return apiClient.post(`/lists/${list_id}`, {item_name, amount})
+  .then(({data}) => {
+    return data
+  })
+}

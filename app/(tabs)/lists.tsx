@@ -2,23 +2,59 @@ import {
   View,
   Text,
   Alert,
-  TextInput,
-  TouchableOpacity,
-  ActivityIndicator,
-  Image,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useGlobalContext } from "@/contexts/GlobalProvider";
-import { addListToUserId, getListsByUserId } from "../../scripts/api";
-import { CustomButton, ListDropdown } from "../../components";
-import { icons } from "../../constants";
+import {
+  addListToUserId,
+  addItemToList,
+  getListItems,
+  getListsByUserId,
+} from "../../scripts/api";
+import { CustomTextInput, ListDropdown } from "../../components";
+type List = {
+  list_name: string;
+  list_id: string;
+  isPrivate: boolean;
+};
+type Item = {
+  amount: number;
+  item_name: string;
+};
+type ItemListProps = {
+  list: Item[];
+};
+
 const Lists = () => {
   const { user } = useGlobalContext();
   const [listName, onChangeListName] = useState("");
-  const [lists, setLists] = useState([]);
+  const [lists, setLists] = useState<List[]>([]);
   const [loading, setLoading] = useState(true);
-  const [listItems, setListItems] = useState([])
+  const [listItems, setListItems] = useState<Item[]>([]);
+  const [itemsLoading, setItemsLoading] = useState(false);
+  const [listId, setListId] = useState("");
+  const [postItemInput, setPostItemInput] = useState("");
+  const [postItemLoading, setPostItemLoading] = useState(false);
+
+  const ItemList: React.FC<ItemListProps> = ({ list }) => {
+    if (!list) {
+      return <Text className="mt-4">This list is empty.</Text>;
+    } else {
+      return (
+        <View className="mt-4">
+          {list.map(({ amount, item_name }, index) => {
+            return (
+              <Text key={index}>
+                {amount} {item_name}
+              </Text>
+            );
+          })}
+        </View>
+      );
+    }
+  };
+
   useEffect(() => {
     setLoading(true);
     getListsByUserId(user.uid)
@@ -31,43 +67,51 @@ const Lists = () => {
       });
   }, []);
 
+  useEffect(() => {
+    if (listId) {
+      setItemsLoading(true);
+      getListItems(listId).then((items) => {
+        setListItems(items);
+        setItemsLoading(false);
+      });
+    }
+  }, [listId]);
+
   return (
     <SafeAreaView className="w-full h-screen">
-      <View className="w-full">
-        <Text className="text-center text-4xl">Shopping Lists</Text>
-      </View>
+      <Text className="w-full text-center text-4xl">Shopping Lists</Text>
       <View className="flex flex-col justify-center items-center mx-12">
-        {!loading && <ListDropdown data={lists} setListItems={setListItems} />}
-        <View className="h-fit flex flex-row justify-evenly items-center pr-2 ml-2 rounded-md mt-4 border border-solid border-zinc-950">
-          <TextInput
-            className="h-8 m-1 p-1 w-1/2 "
-            onChangeText={onChangeListName}
-            value={listName}
-            placeholder="Add a new list"
-          />
-          <TouchableOpacity
-            onPress={() => addListToUserId(user.uid, listName)}
-            activeOpacity={0.7}
-            className={`aspect-square rounded-xl max-h-18 flex flex-row justify-center items-center ${
-              loading ? "opacity-50" : ""
-            }`}
-            disabled={loading}
-          >
-            <Image
-              source={icons.plus}
-              resizeMode="contain"
-              className="w-6 h-6"
+        {loading && <Text>Loading</Text>}
+        {!loading && <ListDropdown data={lists} setListId={setListId} />}
+
+        {listId.length > 0 && !itemsLoading && !loading && (
+          <View className="w-full flex flex-col items-center">
+            <ItemList list={listItems} />
+            <CustomTextInput
+              onChangeText={setPostItemInput}
+              value={postItemInput}
+              placeholder="Add a new item"
+              onPressFn={() =>
+                !postItemInput
+                  ? Alert.alert("Error", "Please enter value.")
+                  : addItemToList(listId, postItemInput)
+              }
+              loading={postItemLoading}
             />
-            {loading && (
-              <ActivityIndicator
-                animating={loading}
-                color="#fff"
-                size="small"
-                className="ml-2"
-              />
-            )}
-          </TouchableOpacity>
-        </View>
+          </View>
+        )}
+
+        <CustomTextInput
+          onChangeText={onChangeListName}
+          value={listName}
+          placeholder="Add a new list"
+          onPressFn={() =>
+            !listName
+              ? Alert.alert("Error", "Please enter value.")
+              : addListToUserId(user.uid, listName)
+          }
+          loading={loading}
+        />
       </View>
     </SafeAreaView>
   );
