@@ -30,9 +30,8 @@ export default function SignIn() {
   }, [user]);
   const login = () => {
     signInWithEmailAndPassword(auth, email, password)
-      .then(async (userCredential) => {
+      .then((userCredential) => {
         setUser(userCredential);
-        router.replace("/(tabs)/home");
       })
       .catch((error) => {
         const errorCode = error.code;

@@ -33,9 +33,7 @@ export default function App() {
           className="text-2xl text-center my-auto"
           title="Get started"
           onPress={() => {
-            if (user) {
-              router.replace("/(tabs)/home");
-            } else {
+            if (!user) {
               router.push("/(auth)");
             }
           }}
