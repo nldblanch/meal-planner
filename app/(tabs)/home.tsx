@@ -1,15 +1,20 @@
 import { View, Text, Button, Platform, StyleSheet } from "react-native";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useGlobalContext } from "@/contexts/GlobalProvider";
 import { getAuth } from "firebase/auth";
 import { router } from "expo-router";
 import Header from "@/components/Header";
 import * as Calendar from "expo-calendar";
+type Calendar = {
+  id: string;
+  name: string;
+  type: string;
+}
 const Home = () => {
   const { user, setUser } = useGlobalContext();
   const auth = getAuth();
-
+  const [calendarSource, setCalendarSource] = useState<Calendar>({id: "", name: "", type: ""})
   useEffect(() => {
     (async () => {
       const { status } = await Calendar.requestCalendarPermissionsAsync();
@@ -17,8 +22,11 @@ const Home = () => {
         const calendars = await Calendar.getCalendarsAsync(
           Calendar.EntityTypes.EVENT
         );
-        console.log("Here are all your calendars:");
-        console.log({ calendars });
+        const calSource = calendars.filter(calendar => {
+          return calendar.title === "Expo Calendar"
+        })[0].source
+        setCalendarSource(calSource)
+        console.log(calendarSource.id)
       }
     })();
   }, []);
@@ -29,34 +37,39 @@ const Home = () => {
     router.replace("/");
   };
   return (
-    <SafeAreaView>
+    <SafeAreaView className="flex flex-col grow items-center justify-center">
       <Header text="Home" />
 
       <View className="w-full p-4">
         <Text className="text-xl">Welcome back {user.uid}!</Text>
       </View>
-      <View className="bg-red-200 w-full h-36">
-        <Text>Calendar Module Example</Text>
-        {/* <Button title="View all calendars" onPress={viewCalendars} /> */}
-        <Button title="Create a new calendar" onPress={createCalendar} />
+      <View className="grow w-full border border-r-0 border-l-0 border-solid border-black p-4">
+        <Text className="w-full text-center text-xl">Calendar Module</Text>
+        <Button title="View all calendars" onPress={() => {
+          
+          const today = new Date()
+          const before = new Date()
+          before.setDate(today.getDate()-2)
+          viewCalendarEvents(calendarSource.id, before, today)}
+          } />
+        {!calendarSource && <Button title="Initialise calendar" onPress={createCalendar} />}
       </View>
       <Button title="Log out" onPress={logout} />
     </SafeAreaView>
   );
 };
+
+async function viewCalendarEvents(id: string, start: Date, end: Date) {
+  const events = await Calendar.getEventsAsync([id], start, end)
+  console.log(events)
+}
 async function getDefaultCalendarSource() {
   const defaultCalendar = await Calendar.getDefaultCalendarAsync();
   return defaultCalendar.source;
 }
 
 async function createCalendar() {
-  const permission = await Calendar.getCalendarPermissionsAsync()
-  
-  if (!permission.granted) {
-    console.log("permission not granted!");
-    const { status } = await Calendar.requestCalendarPermissionsAsync();
-    
-  }
+
   const defaultCalendarSource =
     Platform.OS === "ios"
       ? await getDefaultCalendarSource()
