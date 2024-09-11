@@ -13,6 +13,7 @@ import {
   getListsByUserId,
 } from "../../scripts/api";
 import { CustomTextInput, ListDropdown } from "../../components";
+import Header from "@/components/Header";
 type List = {
   list_name: string;
   list_id: string;
@@ -79,7 +80,7 @@ const Lists = () => {
 
   return (
     <SafeAreaView className="w-full h-screen">
-      <Text className="w-full text-center text-4xl">Shopping Lists</Text>
+      <Header text="Shopping Lists" />
       <View className="flex flex-col justify-center items-center mx-12">
         {loading && <Text>Loading</Text>}
         {!loading && <ListDropdown data={lists} setListId={setListId} />}

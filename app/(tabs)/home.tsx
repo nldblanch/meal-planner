@@ -4,7 +4,8 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useGlobalContext } from "@/contexts/GlobalProvider";
 import { getAuth } from "firebase/auth";
 import { router } from "expo-router";
-const Bookmark = () => {
+import Header from "@/components/Header";
+const Home = () => {
   const { user, setUser } = useGlobalContext();
   const auth = getAuth()
 
@@ -15,6 +16,8 @@ const Bookmark = () => {
   }
   return (
     <SafeAreaView>
+            <Header text="Home" />
+
       <View>
         <Text>Welcome back {user.uid}!</Text>
       </View>
@@ -23,4 +26,4 @@ const Bookmark = () => {
   );
 };
 
-export default Bookmark;
+export default Home;
