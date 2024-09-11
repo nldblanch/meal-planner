@@ -61,22 +61,19 @@ const Home = () => {
     const endTime = new Date(end);
 
     return (
-      <View className="border border-solid h-1/4 p-2 ">
+      <View className="border border-solid p-2 ">
         <View className="flex flex-row items-start justify-between max-h-16 border-b">
           <View className="mt-auto">
             <Text className="text-xl font-semibold underline">{title}</Text>
             <Text className="text-lg">{meal}</Text>
           </View>
           <View className="flex flex-col items-end mt-auto mb-1">
-          
-
             <Text className="text-right">
               Starts at {startTime.getHours()}:{startTime.getMinutes() || "00"}
             </Text>
             <Text className="text-right">
               Ends at {endTime.getHours()}:{endTime.getMinutes() || "00"}
             </Text>
-           
           </View>
         </View>
       </View>
@@ -85,7 +82,6 @@ const Home = () => {
   return (
     <SafeAreaView className="flex flex-col grow items-center justify-center">
       <Header text="Home" />
-
       <View className="w-full p-4">
         <Text className="text-xl">Welcome back {user.uid}!</Text>
       </View>
@@ -94,21 +90,13 @@ const Home = () => {
         {calendarEvents &&
           calendarEvents.map((event) => (
             <CalendarEventContainer
+            key={event.title}
               title={event.title}
               meal={event.meal}
               start={event.start}
               end={event.end}
             />
           ))}
-        <Button
-          title="View all calendars"
-          onPress={() => {
-            const today = new Date();
-            const before = new Date();
-            before.setDate(today.getDate() - 2);
-            viewCalendarEvents(calendarSource.id, before, today);
-          }}
-        />
         {!calendarSource && (
           <Button title="Initialise calendar" onPress={createCalendar} />
         )}

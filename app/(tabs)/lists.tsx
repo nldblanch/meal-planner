@@ -83,7 +83,7 @@ const Lists = () => {
       <Header text="Shopping Lists" />
       <View className="flex flex-col justify-center items-center mx-12">
         {loading && <Text>Loading</Text>}
-        {!loading && <ListDropdown data={lists} setListId={setListId} />}
+        {!loading && (lists.length > 0 ? <ListDropdown data={lists} setListId={setListId} /> : <Text>No lists found.</Text>)}
 
         {listId.length > 0 && !itemsLoading && !loading && (
           <View className="w-full flex flex-col items-center">
