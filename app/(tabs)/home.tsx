@@ -1,4 +1,4 @@
-import { View, Text, Button, Platform, StyleSheet } from "react-native";
+import { View, Text, Button, Platform, StyleSheet, Modal, Alert, Pressable } from "react-native";
 import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useGlobalContext } from "@/contexts/GlobalProvider";
@@ -6,6 +6,7 @@ import { getAuth } from "firebase/auth";
 import { router } from "expo-router";
 import Header from "@/components/Header";
 import * as Calendar from "expo-calendar";
+import EditEventModal from "@/components/EditEventModal";
 type Calendar = {
   id: string;
   name: string;
@@ -59,7 +60,11 @@ const Home = () => {
   }) => {
     const startTime = new Date(start);
     const endTime = new Date(end);
-
+    const startString:string = `${startTime.getHours()}:${startTime.getMinutes() || "00"}`
+    const endString:string = `${endTime.getHours()}:${endTime.getMinutes() || "00"}`
+    const [modalVisible, setModalVisible] = useState(false);
+  
+    const modalProps = {modalVisible, setModalVisible, title, meal, startString, endString}
     return (
       <View className="border border-solid p-2 ">
         <View className="flex flex-row items-start justify-between max-h-16 border-b">
@@ -69,13 +74,18 @@ const Home = () => {
           </View>
           <View className="flex flex-col items-end mt-auto mb-1">
             <Text className="text-right">
-              Starts at {startTime.getHours()}:{startTime.getMinutes() || "00"}
+              Starts at {startString}
             </Text>
             <Text className="text-right">
-              Ends at {endTime.getHours()}:{endTime.getMinutes() || "00"}
+              Ends at {endString}
             </Text>
           </View>
         </View>
+        <View className="mt-2 ml-auto w-2/6 border border-solid">
+
+        <Button title="Edit" onPress={() => setModalVisible(true)} />
+        </View>
+        <EditEventModal modalProps={modalProps} />
       </View>
     );
   };
@@ -143,5 +153,7 @@ async function createCalendar() {
   });
   console.log(`Your new calendar ID is: ${newCalendarID}`);
 }
+
+
 
 export default Home;
