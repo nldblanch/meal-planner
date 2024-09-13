@@ -7,6 +7,12 @@ import { router } from "expo-router";
 import Header from "@/components/Header";
 import * as Calendar from "expo-calendar";
 import CalendarEventContainer from "@/components/CalendarEventContainer";
+import ScrollableCalendarStrip from "@/components/ScrollableCalendarStrip";
+import {
+  getDateTime,
+  getEndOfDay,
+  getStartOfDay,
+} from "../../scripts/utils/getDateNow";
 type Calendar = {
   id: string;
   name: string;
@@ -22,10 +28,11 @@ const Home = () => {
     type: "",
   });
   const [calendarEvents, setCalendarEvents] = useState({
-    breakfast: {title: "Breakfast"},
-    lunch: {title: "Lunch"},
-    dinner: {title: "Dinner"},
+    breakfast: { title: "Breakfast" },
+    lunch: { title: "Lunch" },
+    dinner: { title: "Dinner" },
   });
+  const [date, setDate] = useState(getDateTime());
   useEffect(() => {
     (async () => {
       const { status } = await Calendar.requestCalendarPermissionsAsync();
@@ -37,18 +44,28 @@ const Home = () => {
           return calendar.title === "Expo Calendar";
         })[0].source;
         setCalendarSource(calSource);
-        const time1 = "2024-10-10T23:00:00.000Z";
-        const time2 = "2024-10-11T23:00:00.000Z";
-        const events = await viewCalendarEvents(calSource.id, time1, time2);
 
-        events.forEach((event) => {
-          setCalendarEvents((prev) => {
-            return { ...prev, [event.title.toLowerCase()]: event };
+        const time1 = getStartOfDay(date);
+        const time2 = getEndOfDay(date);
+
+        const events = await viewCalendarEvents(calSource.id, time1, time2);
+        console.log(events)
+        if (events.length === 0) {
+          setCalendarEvents({
+            breakfast: { title: "Breakfast" },
+            lunch: { title: "Lunch" },
+            dinner: { title: "Dinner" },
           });
-        });
+        } else {
+          events.forEach((event) => {
+            setCalendarEvents((prev) => {
+              return { ...prev, [event.title.toLowerCase()]: event };
+            });
+          });
+        }
       }
     })();
-  }, []);
+  }, [date]);
 
   const logout = () => {
     auth.signOut();
@@ -62,8 +79,8 @@ const Home = () => {
       <View className="w-full p-4">
         <Text className="text-xl">Welcome back {user.uid}!</Text>
       </View>
-      <View className="grow w-full border border-r-0 border-l-0 border-solid border-black p-4">
-        <Text className="w-full text-center text-xl">Calendar Module</Text>
+      <View className="grow w-full border border-r-0 border-l-0 border-solid border-black">
+        <ScrollableCalendarStrip setDate={setDate} />
         <CalendarEventContainer props={calendarEvents.breakfast} />
         <CalendarEventContainer props={calendarEvents.lunch} />
         <CalendarEventContainer props={calendarEvents.dinner} />
