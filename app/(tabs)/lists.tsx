@@ -1,8 +1,4 @@
-import {
-  View,
-  Text,
-  Alert,
-} from "react-native";
+import { View, Text, Alert } from "react-native";
 import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useGlobalContext } from "@/contexts/GlobalProvider";
@@ -61,6 +57,7 @@ const Lists = () => {
     getListsByUserId(user.uid)
       .then(({ lists }) => {
         setLists(lists);
+
         setLoading(false);
       })
       .catch((err) => {
@@ -83,7 +80,12 @@ const Lists = () => {
       <Header text="Shopping Lists" />
       <View className="flex flex-col justify-center items-center mx-12">
         {loading && <Text>Loading</Text>}
-        {!loading && (lists.length > 0 ? <ListDropdown data={lists} setListId={setListId} /> : <Text>No lists found.</Text>)}
+        {!loading &&
+          (lists.length > 0 ? (
+            <ListDropdown data={lists} setListId={setListId} />
+          ) : (
+            <Text>No lists found.</Text>
+          ))}
 
         {listId.length > 0 && !itemsLoading && !loading && (
           <View className="w-full flex flex-col items-center">

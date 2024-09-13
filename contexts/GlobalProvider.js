@@ -8,24 +8,10 @@ const GlobalProvider = ({ children }) => {
 });
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [eventInMemory, setEventInMemory] = useState({date: null, title: null})
 
   useEffect(() => {
-    // getCurrentUser()
-    //   .then((res) => {
-    //     if (res) {
-    //       setIsLogged(true);
-    //       setUser(res);
-    //     } else {
-    //       setIsLogged(false);
-    //       setUser(null);
-    //     }
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   })
-    //   .finally(() => {
-    //     setLoading(false);
-    //   });
+    
   }, []);
 
   return (
@@ -36,7 +22,9 @@ const GlobalProvider = ({ children }) => {
         user,
         setUser,
         loading,
-        setLoading
+        setLoading,
+        eventInMemory,
+        setEventInMemory
       }}
     >
       {children}

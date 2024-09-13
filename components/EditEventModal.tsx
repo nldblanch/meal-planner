@@ -12,7 +12,14 @@ type EditEventModalProps = {
 };
 
 const EditEventModal: React.FC<EditEventModalProps> = ({ modalProps }) => {
-  const { editModalVisible, setEditModalVisible, title, meal, startString, endString } = modalProps;
+  const {
+    editModalVisible,
+    setEditModalVisible,
+    title,
+    meal,
+    startString,
+    endString,
+  } = modalProps;
   return (
     <View style={styles.centeredView}>
       <Modal
@@ -33,7 +40,7 @@ const EditEventModal: React.FC<EditEventModalProps> = ({ modalProps }) => {
             <Text className="text-xl p-2">{startString}</Text>
             <Text className="text-xl p-2">{endString}</Text>
             <Pressable
-            className="mt-auto mb-12"
+              className="mt-auto mb-12"
               style={[styles.button, styles.buttonClose]}
               onPress={() => setEditModalVisible(!editModalVisible)}
             >

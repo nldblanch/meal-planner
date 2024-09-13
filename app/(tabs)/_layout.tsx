@@ -58,6 +58,21 @@ const TabsLayout = () => {
             ),
           }}
         />
+         <Tabs.Screen
+          name="search"
+          options={{
+            title: "Search",
+            headerShown: false,
+            tabBarIcon: ({ color, focused }) => (
+              <TabIcon
+                icon={icons.search}
+                color={color}
+                name="Search"
+                focused={focused}
+              />
+            ),
+          }}
+        />
         <Tabs.Screen
           name="lists"
           options={{
@@ -88,6 +103,7 @@ const TabsLayout = () => {
             ),
           }}
         />
+        
       </Tabs>
     </>
   );
