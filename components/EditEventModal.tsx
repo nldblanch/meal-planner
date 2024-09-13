@@ -2,8 +2,8 @@ import React from "react";
 import { View, Text, StyleSheet, Modal, Alert, Pressable } from "react-native";
 type EditEventModalProps = {
   modalProps: {
-    modalVisible: boolean;
-    setModalVisible: React.Dispatch<boolean>;
+    editModalVisible: boolean;
+    setEditModalVisible: React.Dispatch<boolean>;
     title: string;
     meal: string;
     startString: string;
@@ -12,16 +12,16 @@ type EditEventModalProps = {
 };
 
 const EditEventModal: React.FC<EditEventModalProps> = ({ modalProps }) => {
-  const { modalVisible, setModalVisible, title, meal, startString, endString } = modalProps;
+  const { editModalVisible, setEditModalVisible, title, meal, startString, endString } = modalProps;
   return (
     <View style={styles.centeredView}>
       <Modal
         animationType="slide"
         transparent={true}
-        visible={modalVisible}
+        visible={editModalVisible}
         onRequestClose={() => {
           Alert.alert("Modal has been closed.");
-          setModalVisible(!modalVisible);
+          setEditModalVisible(!editModalVisible);
         }}
       >
         <View style={styles.centeredView}>
@@ -35,7 +35,7 @@ const EditEventModal: React.FC<EditEventModalProps> = ({ modalProps }) => {
             <Pressable
             className="mt-auto mb-12"
               style={[styles.button, styles.buttonClose]}
-              onPress={() => setModalVisible(!modalVisible)}
+              onPress={() => setEditModalVisible(!editModalVisible)}
             >
               <Text style={styles.textStyle}>Done</Text>
             </Pressable>

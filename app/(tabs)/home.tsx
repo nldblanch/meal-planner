@@ -22,9 +22,9 @@ const Home = () => {
     type: "",
   });
   const [calendarEvents, setCalendarEvents] = useState({
-    breakfast: {},
-    lunch: {},
-    dinner: {},
+    breakfast: {title: "Breakfast"},
+    lunch: {title: "Lunch"},
+    dinner: {title: "Dinner"},
   });
   useEffect(() => {
     (async () => {
@@ -37,8 +37,8 @@ const Home = () => {
           return calendar.title === "Expo Calendar";
         })[0].source;
         setCalendarSource(calSource);
-        const time1 = "2024-9-10T23:00:00.000Z";
-        const time2 = "2024-9-11T23:00:00.000Z";
+        const time1 = "2024-10-10T23:00:00.000Z";
+        const time2 = "2024-10-11T23:00:00.000Z";
         const events = await viewCalendarEvents(calSource.id, time1, time2);
 
         events.forEach((event) => {
