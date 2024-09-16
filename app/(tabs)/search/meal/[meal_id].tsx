@@ -46,7 +46,7 @@ const Meal = () => {
               return meal[key];
             })
             .filter((measure) => {
-              return measure !== " ";
+              return measure && measure !== " ";
             })
         );
         setLoading(false);
@@ -68,7 +68,7 @@ const Meal = () => {
         text={meal.strMeal}
         link={meal.strSource ? meal.strSource : null}
       />
-      <ScrollView className="">
+      <ScrollView className="pb-12">
         <Image
           className="object-cover aspect-square w-full mt-2"
           source={{ url: meal.strMealThumb }}
@@ -93,42 +93,35 @@ const Meal = () => {
           )}
         </View>
 
-        <View className="flex flex-row justify-center mx-4 border w-fit self-center">
-          <View className="grow border-r">
-            <Text className="pl-2 py-1 font-bold text-lg">Ingredient</Text>
-            <View className="w-full border-b"></View>
-            {ingredients &&
-              ingredients.map((ingredient, i) => {
-                return (
-                  <Text key={i} className="pl-2 text-lg">
-                    {ingredient}
-                  </Text>
-                );
-              })}
-          </View>
-          <View className="grow">
-            <Text className="pl-2 py-1 font-bold text-lg">Measure</Text>
-            <View className="w-full border-b"></View>
-            {measures &&
-              measures.map((measure, i) => {
-                return (
-                  <Text key={i} className="pl-2 text-lg">
-                    {measure}
-                  </Text>
-                );
-              })}
-          </View>
+        <View className="flex flex-col items-center">
+          <Text className="text-2xl font-semibold pl-2 pb-2 text-left w-full">Ingredients</Text>
+          {ingredients &&
+            ingredients.map((ingredient, i) => {
+              return (
+                <View
+                  key={i}
+                  className="flex flex-row w-[95%] flex-wrap grow shrink py-1 border-b-2 border-b-zinc-300"
+                >
+                  {
+                    measures[i].toLowerCase() === "to serve" || measures[i].toLowerCase() === "to glaze"
+                    ? <Text className="text-lg">{`${ingredient}, ${measures[i].toLowerCase()}`}</Text>
+                    : <Text className="text-lg">{`${measures[i]} ${ingredient.toLowerCase()}`}</Text>
+                  }
+                </View>
+              );
+            })}
         </View>
+
         <Text
           onPress={() => setInstructionsVisible(!instructionsVisible)}
-          className="pl-2 text-lg font-semibold mt-2"
+          className="pl-2 text-2xl font-semibold mt-2"
         >
           {instructionsVisible ? "Hide" : "Show"} Instructions -{">"}
         </Text>
         {instructionsVisible && (
           <Text className="text-lg pl-2">{meal.strInstructions}</Text>
         )}
-        <View className="h-12"></View>
+        <View className="h-24"></View>
       </ScrollView>
     </SafeAreaView>
   );
