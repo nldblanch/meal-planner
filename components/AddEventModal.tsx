@@ -37,7 +37,7 @@ const AddEventModal: React.FC<EditEventModalProps> = ({ modalProps }) => {
               className="mb-4 bg-slate-500 w-11/12 p-4 rounded-sm"
               onPress={() => {
                 setAddModalVisible(!addModalVisible)
-                router.push("/(tabs)/meals")
+                router.push("/(tabs)/search/meals")
               }}
             >
               <Text className="text-white text-center font-bold">
