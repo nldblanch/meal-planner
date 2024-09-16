@@ -65,7 +65,7 @@ const MealCard: React.FC<Meal> = ({ meal }) => {
     onPress={() => {router.push(`/${meal.idMeal}`)}}
     >
       <Image
-        className="object-cover aspect-square grow w-full rounded-md"
+        className="object-cover aspect-square w-full rounded-md"
         source={{ url: meal.strMealThumb }}
       />
       <Text className="w-full text-left text-lg font-bold p-1">{meal.strMeal}</Text>
