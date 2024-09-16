@@ -5,6 +5,7 @@ import Header from "@/components/Header";
 import Categories from "@/components/Categories";
 import { getRandomMeal } from "@/scripts/mealApi";
 import MealCard from "@/components/MealCard";
+import { SearchBar } from "@/components";
 
 interface MealCardInterface {
   dateModified: string | null;
@@ -71,10 +72,9 @@ const Search = () => {
     })
   }, [])
   return (
-    <SafeAreaView className="w-full h-screen">
-
+    <SafeAreaView className="w-full h-screen flex flex-col p-0 items-center">
       <Header text="Search" />
-      
+      <SearchBar />
       <Categories />
       {meal && <MealCard meal={meal} />}
     </SafeAreaView>

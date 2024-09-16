@@ -8,8 +8,7 @@ import {
   getListItems,
   getListsByUserId,
 } from "../../scripts/api";
-import { CustomTextInput, ListDropdown } from "../../components";
-import Header from "@/components/Header";
+import { CustomTextInput, ListDropdown, Header } from "../../components";
 type List = {
   list_name: string;
   list_id: string;

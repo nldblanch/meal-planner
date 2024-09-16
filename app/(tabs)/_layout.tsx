@@ -61,13 +61,13 @@ const TabsLayout = () => {
          <Tabs.Screen
           name="search"
           options={{
-            title: "Search",
+            title: "Meals",
             headerShown: false,
             tabBarIcon: ({ color, focused }) => (
               <TabIcon
                 icon={icons.search}
                 color={color}
-                name="Search"
+                name="Meals"
                 focused={focused}
               />
             ),
@@ -103,7 +103,14 @@ const TabsLayout = () => {
             ),
           }}
         />
-        
+         {/* <Tabs.Screen
+          name="search/[query]"
+          options={{
+            title: "Search",
+            headerShown: false,
+            tabBarButton: () => null,
+          }}
+        /> */}
       </Tabs>
     </>
   );

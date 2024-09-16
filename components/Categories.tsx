@@ -48,7 +48,7 @@ function Categories() {
         Browse Categories
       </Text>
       <Scroller />
-      <View className="w-full border border-solid"></View>
+      <View className="w-full border border-solid mb-4"></View>
     </>
   );
 }

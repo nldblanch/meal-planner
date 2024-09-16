@@ -1,8 +1,5 @@
-import { useState } from "react";
-import { Button, Image, StyleSheet, Text, View } from "react-native";
-import EditEventModal from "./EditEventModal";
-import AddEventModal from "./AddEventModal";
-import { useGlobalContext } from "@/contexts/GlobalProvider";
+import { Image, Pressable, Text, } from "react-native";
+import { router } from "expo-router";
 
 interface MealCard {
   dateModified: string | null;
@@ -64,14 +61,16 @@ type Meal = {
 };
 const MealCard: React.FC<Meal> = ({ meal }) => {
   return (
-    <View className="w-5/12 aspect-2/3 overflow-hidden border border-black flex flex-col items-center">
+    <Pressable className="w-5/12 aspect-2/3 overflow-hidden flex flex-col items-center rounded-md mt-4" 
+    onPress={() => {router.push(`/${meal.idMeal}`)}}
+    >
       <Image
-        className="object-cover aspect-square grow w-full"
+        className="object-cover aspect-square grow w-full rounded-md"
         source={{ url: meal.strMealThumb }}
       />
-      <Text className="w-full text-left text-lg font-bold">{meal.strMeal}</Text>
+      <Text className="w-full text-left text-lg font-bold p-1">{meal.strMeal}</Text>
       <Text className="absolute left-0 italic p-1 w-full bg-faint">{meal.strArea}</Text>
-    </View>
+    </Pressable>
   );
 };
 

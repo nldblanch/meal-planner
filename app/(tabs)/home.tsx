@@ -4,11 +4,9 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useGlobalContext } from "@/contexts/GlobalProvider";
 import { getAuth } from "firebase/auth";
 import { router } from "expo-router";
-import Header from "@/components/Header";
 import * as Calendar from "expo-calendar";
-import CalendarEventContainer from "@/components/CalendarEventContainer";
-import ScrollableCalendarStrip from "@/components/ScrollableCalendarStrip";
-import {
+import { ScrollableCalendarStrip, CalendarEventContainer, Header } from "@/components";
+import {  
   getDateTime,
   getEndOfDay,
   getStartOfDay,
