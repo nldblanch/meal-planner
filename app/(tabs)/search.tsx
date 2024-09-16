@@ -68,7 +68,6 @@ const Search = () => {
     getRandomMeal()
     .then((meal) => {
       setMeal(meal)
-      console.log(meal)
     })
   }, [])
   return (
