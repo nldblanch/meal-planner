@@ -63,7 +63,6 @@ type Meal = {
   meal: MealCard;
 };
 const MealCard: React.FC<Meal> = ({ meal }) => {
-  console.log(meal);
   return (
     <View className="w-5/12 aspect-2/3 overflow-hidden border border-black flex flex-col items-center">
       <Image
