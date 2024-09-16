@@ -1,4 +1,5 @@
 import { useGlobalContext } from "@/contexts/GlobalProvider";
+import { router } from "expo-router";
 import React from "react";
 import { View, Text, StyleSheet, Modal, Alert, Pressable } from "react-native";
 type EditEventModalProps = {
@@ -27,8 +28,6 @@ const AddEventModal: React.FC<EditEventModalProps> = ({ modalProps }) => {
           className="flex justify-center items-center h-full"
           style={styles.centeredView}
           >
-          <Text>{eventInMemory.title}</Text>
-          <Text>{eventInMemory.date && eventInMemory.date.toString()}</Text>
           <View className=" flex flex-col justify-center items-center m-4 bg-white rounded-2xl p-1 w-4/5">
             <Text className="justify-self-start mb-8 text-4xl mt-2 underline">
               Add {title}
@@ -36,7 +35,10 @@ const AddEventModal: React.FC<EditEventModalProps> = ({ modalProps }) => {
 
             <Pressable
               className="mb-4 bg-slate-500 w-11/12 p-4 rounded-sm"
-              onPress={() => setAddModalVisible(!addModalVisible)}
+              onPress={() => {
+                setAddModalVisible(!addModalVisible)
+                router.push("/(tabs)/search")
+              }}
             >
               <Text className="text-white text-center font-bold">
                 Search for a meal
@@ -44,7 +46,10 @@ const AddEventModal: React.FC<EditEventModalProps> = ({ modalProps }) => {
             </Pressable>
             <Pressable
               className="mb-4 bg-slate-500 w-11/12 p-4 rounded-sm"
-              onPress={() => setAddModalVisible(!addModalVisible)}
+              onPress={() => {
+                setAddModalVisible(!addModalVisible)
+                router.push("/(tabs)/recipes")
+              }}
             >
               <Text className="text-white text-center font-bold">
                 Choose a meal I created
