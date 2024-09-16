@@ -1,12 +1,10 @@
-import { View, Text } from "react-native";
-import React, { useEffect, useState } from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
-import Header from "@/components/Header";
-import Categories from "@/components/Categories";
-import { getRandomMeal } from "@/scripts/mealApi";
-import MealCard from "@/components/MealCard";
+import { useState } from "react";
+import { Button, Image, StyleSheet, Text, View } from "react-native";
+import EditEventModal from "./EditEventModal";
+import AddEventModal from "./AddEventModal";
+import { useGlobalContext } from "@/contexts/GlobalProvider";
 
-interface MealCardInterface {
+interface MealCard {
   dateModified: string | null;
   idMeal: string;
   strArea: string;
@@ -61,25 +59,21 @@ interface MealCardInterface {
   strTags: string;
   strYoutube: string;
 }
-
-const Search = () => {
-  const [meal, setMeal] = useState<MealCardInterface>()
-  useEffect(() => {
-    getRandomMeal()
-    .then((meal) => {
-      setMeal(meal)
-      console.log(meal)
-    })
-  }, [])
+type Meal = {
+  meal: MealCard;
+};
+const MealCard: React.FC<Meal> = ({ meal }) => {
+  console.log(meal);
   return (
-    <SafeAreaView className="w-full h-screen">
-
-      <Header text="Search" />
-      
-      <Categories />
-      {meal && <MealCard meal={meal} />}
-    </SafeAreaView>
+    <View className="w-5/12 aspect-2/3 overflow-hidden border border-black flex flex-col items-center">
+      <Image
+        className="object-cover aspect-square grow w-full"
+        source={{ url: meal.strMealThumb }}
+      />
+      <Text className="w-full text-left text-lg font-bold">{meal.strMeal}</Text>
+      <Text className="absolute left-0 italic p-1 w-full bg-faint">{meal.strArea}</Text>
+    </View>
   );
 };
 
-export default Search;
+export default MealCard;

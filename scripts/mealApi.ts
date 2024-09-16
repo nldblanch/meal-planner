@@ -50,3 +50,13 @@ export function getMealsByName(searchQuery:string) {
 			throw error;
 		});
 }
+
+export const getRandomMeal = () => {
+  return api.get("random.php")
+  .then(({data: {meals}}) => {
+	return meals[0]
+  }).catch((error) => {
+	console.error('Error fetching meal: ', error);
+	throw error;
+});
+}
