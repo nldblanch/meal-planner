@@ -49,7 +49,6 @@ const Home = () => {
         const time2 = getEndOfDay(date);
 
         const events = await viewCalendarEvents(calSource.id, time1, time2);
-        console.log(events)
         if (events.length === 0) {
           setCalendarEvents({
             breakfast: { title: "Breakfast" },
@@ -72,7 +71,7 @@ const Home = () => {
     setUser(null);
     router.replace("/");
   };
-
+  
   return (
     <SafeAreaView className="flex flex-col grow items-center justify-center">
       <Header text="Home" />
@@ -81,9 +80,9 @@ const Home = () => {
       </View>
       <View className="grow w-full border border-r-0 border-l-0 border-solid border-black">
         <ScrollableCalendarStrip setDate={setDate} />
-        <CalendarEventContainer props={calendarEvents.breakfast} />
-        <CalendarEventContainer props={calendarEvents.lunch} />
-        <CalendarEventContainer props={calendarEvents.dinner} />
+        <CalendarEventContainer props={calendarEvents.breakfast} date={date} />
+        <CalendarEventContainer props={calendarEvents.lunch}  date={date} />
+        <CalendarEventContainer props={calendarEvents.dinner}  date={date} />
         {!calendarSource && (
           <Button title="Initialise calendar" onPress={createCalendar} />
         )}

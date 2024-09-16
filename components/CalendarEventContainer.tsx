@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Button, Text, View } from "react-native";
 import EditEventModal from "./EditEventModal";
 import AddEventModal from "./AddEventModal";
+import { useGlobalContext } from "@/contexts/GlobalProvider";
 
 type CalendarEvent = {
   title: string;
@@ -11,10 +12,12 @@ type CalendarEvent = {
 };
 type CalendarEventContainerProps = {
   props: CalendarEvent;
+  date: string
 };
 const CalendarEventContainer: React.FC<CalendarEventContainerProps> = ({
-  props: { start, end, meal, title },
+  props: { start, end, meal, title }, date
 }) => {
+  const { setEventInMemory } = useGlobalContext();
   const startTime = new Date(start);
   const endTime = new Date(end);
   const startString: string = `${startTime.getHours()}:${
@@ -37,7 +40,6 @@ const CalendarEventContainer: React.FC<CalendarEventContainerProps> = ({
     addModalVisible,
     setAddModalVisible,
     title,
-
   };
   return (
     <View className="border border-solid p-2 ">
@@ -59,6 +61,7 @@ const CalendarEventContainer: React.FC<CalendarEventContainerProps> = ({
           <Button
             title="Add"
             onPress={() => {
+              setEventInMemory({date, title})
               setAddModalVisible(true);
             }}
           />

@@ -1,3 +1,4 @@
+import { useGlobalContext } from "@/contexts/GlobalProvider";
 import React from "react";
 import { View, Text, StyleSheet, Modal, Alert, Pressable } from "react-native";
 type EditEventModalProps = {
@@ -10,6 +11,7 @@ type EditEventModalProps = {
 
 const AddEventModal: React.FC<EditEventModalProps> = ({ modalProps }) => {
   const { addModalVisible, setAddModalVisible, title } = modalProps;
+  const { eventInMemory } = useGlobalContext();
   return (
     <View style={styles.centeredView}>
       <Modal
@@ -20,11 +22,13 @@ const AddEventModal: React.FC<EditEventModalProps> = ({ modalProps }) => {
           Alert.alert("Modal has been closed.");
           setAddModalVisible(!addModalVisible);
         }}
-      >
+        >
         <View
           className="flex justify-center items-center h-full"
           style={styles.centeredView}
-        >
+          >
+          <Text>{eventInMemory.title}</Text>
+          <Text>{eventInMemory.date && eventInMemory.date.toString()}</Text>
           <View className=" flex flex-col justify-center items-center m-4 bg-white rounded-2xl p-1 w-4/5">
             <Text className="justify-self-start mb-8 text-4xl mt-2 underline">
               Add {title}

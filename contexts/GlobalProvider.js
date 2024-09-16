@@ -1,18 +1,25 @@
-import { createContext, useContext, useEffect, useReducer, useState } from "react";
-import { SignInReducer } from '../reducers/authReducer'
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useReducer,
+  useState,
+} from "react";
+import { SignInReducer } from "../reducers/authReducer";
 const GlobalContext = createContext();
 export const useGlobalContext = () => useContext(GlobalContext);
 const GlobalProvider = ({ children }) => {
-  const [signedIn, dispatchSignedIn] = useReducer(SignInReducer,{
-    userToken:null,
-});
+  const [signedIn, dispatchSignedIn] = useReducer(SignInReducer, {
+    userToken: null,
+  });
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [eventInMemory, setEventInMemory] = useState({date: null, title: null})
+  const [eventInMemory, setEventInMemory] = useState({
+    date: null,
+    title: null,
+  });
 
-  useEffect(() => {
-    
-  }, []);
+  useEffect(() => {}, []);
 
   return (
     <GlobalContext.Provider
@@ -24,7 +31,7 @@ const GlobalProvider = ({ children }) => {
         loading,
         setLoading,
         eventInMemory,
-        setEventInMemory
+        setEventInMemory,
       }}
     >
       {children}
