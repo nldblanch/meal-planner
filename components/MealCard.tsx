@@ -62,7 +62,7 @@ type Meal = {
 const MealCard: React.FC<Meal> = ({ meal }) => {
   return (
     <Pressable className="w-5/12 aspect-2/3 overflow-hidden flex flex-col items-center rounded-md mt-4" 
-    onPress={() => {router.push(`/${meal.idMeal}`)}}
+    onPress={() => {router.push(`/(tabs)/search/meal/${meal.idMeal}`)}}
     >
       <Image
         className="object-cover aspect-square w-full rounded-md"

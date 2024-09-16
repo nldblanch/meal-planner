@@ -30,8 +30,8 @@ export function getMealsByCategory(category: string) {
 export function getMealById(idMeal: string) {
   return api
     .get(`/lookup.php?i=${idMeal}`)
-    .then(({ data }) => {
-      return data.meals;
+    .then(({ data: { meals } }) => {
+      return meals[0];
     })
     .catch((error) => {
       console.error("Error fetching meal by ID:", error);
@@ -42,8 +42,8 @@ export function getMealById(idMeal: string) {
 export const searchMeals = (query: string) => {
   return api
     .get(`/search.php?s=${query}`)
-    .then(({ data }) => {
-      return data.meals;
+    .then(({ data: { meals } }) => {
+      return meals;
     })
     .catch((error) => {
       console.error("Error searching meals:", error);
