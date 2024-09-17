@@ -17,11 +17,11 @@ const GlobalProvider = ({ children }) => {
     date: null,
     title: null,
   });
-  // type Calendar = {
-  //   id: string;
-  //   name: string;
-  //   type: string;
-  // };
+
+  const [mealInMemory, setMealInMemory] = useState({
+    meal: null
+  })
+
   const [calendarSource, setCalendarSource] = useState({
     id: "",
     name: "",
@@ -38,6 +38,8 @@ const GlobalProvider = ({ children }) => {
         setUser,
         eventInMemory,
         setEventInMemory,
+        mealInMemory,
+        setMealInMemory,
         calendarSource,
         setCalendarSource
       }}

@@ -3,21 +3,28 @@ import { Button, Text, View } from "react-native";
 import EditEventModal from "./EditEventModal";
 import AddEventModal from "./AddEventModal";
 import { useGlobalContext } from "@/contexts/GlobalProvider";
-
+import { getApproxEndTime, getApproxStartTime } from "@/scripts/utils/getMealTimes";
+import * as Calendar from "expo-calendar";
+import { router } from "expo-router";
 type CalendarEvent = {
   title: string;
   meal: string;
   start: string;
   end: string;
+  id: string;
+  notes: string;
 };
 type CalendarEventContainerProps = {
   props: CalendarEvent;
-  date: string
+  date: string;
+  modalVisit?: boolean;
 };
 const CalendarEventContainer: React.FC<CalendarEventContainerProps> = ({
-  props: { start, end, meal, title }, date
+  props: { start, end, meal, title, id, notes },
+  date,
+  modalVisit,
 }) => {
-  const { setEventInMemory } = useGlobalContext();
+  const { setEventInMemory, mealInMemory, setMealInMemory, calendarSource } = useGlobalContext();
   const startTime = new Date(start);
   const endTime = new Date(end);
   const startString: string = `${startTime.getHours()}:${
@@ -42,7 +49,7 @@ const CalendarEventContainer: React.FC<CalendarEventContainerProps> = ({
     title,
   };
   return (
-    <View className="border border-solid p-2 ">
+    <View className="border border-solid p-2 max-h-32 w-full">
       <View className="flex flex-row items-start justify-between max-h-16 border-b">
         <View className="mt-auto">
           <Text className="text-xl font-semibold underline">{title}</Text>
@@ -54,18 +61,57 @@ const CalendarEventContainer: React.FC<CalendarEventContainerProps> = ({
         </View>
       </View>
       <View className="mt-2 ml-auto w-2/6 border border-solid">
-        {meal && (
+        {modalVisit === true ? (
+          meal ? (
+            <Button title="Replace" onPress={() => {
+              const eventData = {
+                startDate: getApproxStartTime(title, new Date(startTime)),
+                endDate: getApproxEndTime(title, new Date(endTime)),
+                notes: `Meal ID: ${mealInMemory.idMeal}`,
+                title: `${title}: ${mealInMemory.strMeal}`,
+              };
+              return Calendar.updateEventAsync(id, eventData)
+              .then(() => {
+                setMealInMemory(null);
+                router.replace("/(tabs)/home");
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+            }} />
+          ) : (
+            <Button title="Add" onPress={() => {
+
+
+              const eventData = {
+                startDate: getApproxStartTime(title, new Date(date)),
+                endDate: getApproxEndTime(title, new Date(date)),
+                notes: `Meal ID: ${mealInMemory.idMeal}`,
+                title: `${title}: ${mealInMemory.strMeal}`,
+              };
+              return Calendar.createEventAsync(calendarSource.id, eventData)
+              .then(() => {
+                setMealInMemory(null);
+                router.replace("/(tabs)/home");
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+            }} />
+          )
+        ) : meal ? (
           <Button title="Edit" onPress={() => setEditModalVisible(true)} />
-        )}
-        {!meal && (
+        ) : (
           <Button
             title="Add"
             onPress={() => {
-              setEventInMemory({date, title})
+              setEventInMemory({ date, title });
               setAddModalVisible(true);
             }}
           />
         )}
+
+      
       </View>
       <EditEventModal modalProps={editModalProps} />
       <AddEventModal modalProps={addModalProps} />

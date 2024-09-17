@@ -15,7 +15,7 @@ import Footer from "@/components/Footer";
 
 
 const Home = () => {
-  const { user, setUser, calendarSource, setCalendarSource, eventInMemory } = useGlobalContext();
+  const { user, setUser, calendarSource, setCalendarSource, eventInMemory, mealInMemory } = useGlobalContext();
   const auth = getAuth();
   
   const [calendarEvents, setCalendarEvents] = useState({
@@ -60,7 +60,7 @@ const Home = () => {
         }
       }
     })();
-  }, [date, eventInMemory]);
+  }, [date, eventInMemory, mealInMemory]);
 
   const logout = () => {
     auth.signOut();

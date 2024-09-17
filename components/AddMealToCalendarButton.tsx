@@ -7,8 +7,15 @@ import {
   getApproxStartTime,
 } from "@/scripts/utils/getMealTimes";
 import { Alert, Modal, Pressable, Text, View } from "react-native";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CustomButton from "./CustomButton";
+import {
+  getDateTime,
+  getEndOfDay,
+  getStartOfDay,
+} from "@/scripts/utils/getDateNow";
+import ScrollableCalendarStrip from "./ScrollableCalendarStrip";
+import CalendarEventContainer from "./CalendarEventContainer";
 interface MealInterface {
   dateModified: string | null;
   idMeal: string;
@@ -68,7 +75,7 @@ type Props = {
   meal: MealInterface;
 };
 const AddMealToCalendarButton: React.FC<Props> = ({ meal }) => {
-  const { eventInMemory, setEventInMemory, calendarSource } =
+  const { eventInMemory, setEventInMemory, mealInMemory, setMealInMemory, calendarSource } =
     useGlobalContext();
   const [modalVisible, setModalVisible] = useState(false);
   const eventData = {
@@ -81,6 +88,11 @@ const AddMealToCalendarButton: React.FC<Props> = ({ meal }) => {
     modalVisible,
     setModalVisible,
   };
+  useEffect(() => {
+    if (!mealInMemory) {
+      setModalVisible(false)
+    }
+  }, [mealInMemory])
   return (
     <>
       <CustomButton
@@ -88,7 +100,8 @@ const AddMealToCalendarButton: React.FC<Props> = ({ meal }) => {
         containerStyles={"border w-1/2 self-center mb-4 bg-zinc-200"}
         handlePress={() => {
           if (!eventInMemory.date && !eventInMemory.title) {
-            setModalVisible(true)
+            setMealInMemory({...meal})
+            setModalVisible(true);
           } else
             return Calendar.createEventAsync(calendarSource.id, eventData)
               .then(() => {
@@ -110,12 +123,40 @@ const AddMealToCalendarButton: React.FC<Props> = ({ meal }) => {
 interface AddMealModal {
   modalProps: {
     modalVisible: boolean;
-    setModalVisible: React.Dispatch<boolean>
-  }
+    setModalVisible: React.Dispatch<boolean>;
+  };
 }
-const AddMealModal: React.FC<AddMealModal> = ({ modalProps: { modalVisible, setModalVisible } }) => {
+const AddMealModal: React.FC<AddMealModal> = ({
+  modalProps: { modalVisible, setModalVisible },
+}) => {
+  const [date, setDate] = useState(getDateTime());
+  const [calendarEvents, setCalendarEvents] = useState({
+    breakfast: { title: "Breakfast" },
+    lunch: { title: "Lunch" },
+    dinner: { title: "Dinner" },
+  });
+  const { calendarSource } = useGlobalContext();
+  useEffect(() => {
+    const time1 = getStartOfDay(date);
+    const time2 = getEndOfDay(date);
+    viewCalendarEvents(calendarSource.source, time1, time2).then((events) => {
+      if (events.length === 0) {
+        setCalendarEvents({
+          breakfast: { title: "Breakfast" },
+          lunch: { title: "Lunch" },
+          dinner: { title: "Dinner" },
+        });
+      } else {
+        events.forEach((event) => {
+          setCalendarEvents((prev) => {
+            return { ...prev, [event.title.toLowerCase()]: event };
+          });
+        });
+      }
+    });
+  }, [date]);
   return (
-    <View className="bg-black">
+    <View>
       <Modal
         animationType="slide"
         transparent={true}
@@ -125,34 +166,16 @@ const AddMealModal: React.FC<AddMealModal> = ({ modalProps: { modalVisible, setM
           setModalVisible(!modalVisible);
         }}
       >
-        <View className="flex justify-center items-center h-full">
-          <View className=" flex flex-col justify-center items-center m-4 bg-white rounded-2xl p-1 w-4/5">
+        <View className="flex justify-center items-center h-full bg-faint">
+          <View className=" flex flex-col justify-center items-center m-4 bg-white rounded-2xl p-1 w-11/12 h-[80%] border shadow-md">
             <Text className="justify-self-start mb-8 text-4xl mt-2 underline">
               Add this meal
             </Text>
+            <ScrollableCalendarStrip setDate={setDate} />
+            <CalendarEventContainer props={calendarEvents.breakfast} date={date}  modalVisit={true}/>
+            <CalendarEventContainer props={calendarEvents.lunch}  date={date}  modalVisit={true}/>
+            <CalendarEventContainer props={calendarEvents.dinner}  date={date} modalVisit={true}/>
 
-            <Pressable
-              className="mb-4 bg-slate-500 w-11/12 p-4 rounded-sm"
-              onPress={() => {
-                setModalVisible(!modalVisible);
-                router.push("/(tabs)/search/meals");
-              }}
-            >
-              <Text className="text-white text-center font-bold">
-                Search for a meal
-              </Text>
-            </Pressable>
-            <Pressable
-              className="mb-4 bg-slate-500 w-11/12 p-4 rounded-sm"
-              onPress={() => {
-                setModalVisible(!modalVisible);
-                router.push("/(tabs)/recipes");
-              }}
-            >
-              <Text className="text-white text-center font-bold">
-                Choose a meal I created
-              </Text>
-            </Pressable>
             <Pressable
               className="mt-4 mb-2 rounded-xl bg-blue-500 p-3"
               onPress={() => setModalVisible(!modalVisible)}
@@ -165,5 +188,23 @@ const AddMealModal: React.FC<AddMealModal> = ({ modalProps: { modalVisible, setM
     </View>
   );
 };
+
+async function viewCalendarEvents(id: string, start: Date, end: Date) {
+  const events = await Calendar.getEventsAsync([id], start, end);
+
+  const meals = events.map((event) => {
+    const meal = event.title.split(": ")[0];
+    const choice = event.title.split(": ")[1];
+    return {
+      title: meal,
+      meal: choice,
+      notes: event.notes,
+      id: event.id,
+      start: event.startDate,
+      end: event.endDate,
+    };
+  });
+  return meals;
+}
 
 export default AddMealToCalendarButton;
