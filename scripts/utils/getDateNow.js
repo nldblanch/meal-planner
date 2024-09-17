@@ -33,12 +33,12 @@ export const getStartOfDay = (date) => {
   const year = dateObj.getFullYear();
   const month = String(dateObj.getMonth() + 1).padStart(2, "0"); 
   const day = String(dateObj.getDate()).padStart(2, "0");
-  return `${year}-${month}-${day}T23:00:00.000Z`;
+  return new Date(`${year}-${month}-${day}T23:00:00.000Z`);
 };
 export const getEndOfDay = (date) => {
   const dateObj = new Date(date);
   const year = dateObj.getFullYear();
   const month = String(dateObj.getMonth() + 1).padStart(2, "0"); 
   const day = String(dateObj.getDate()).padStart(2, "0");
-  return `${year}-${month}-${day}T23:00:00.000Z`;
+  return new Date(`${year}-${month}-${day}T23:00:00.000Z`);
 };

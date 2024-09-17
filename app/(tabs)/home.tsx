@@ -11,20 +11,12 @@ import {
   getEndOfDay,
   getStartOfDay,
 } from "../../scripts/utils/getDateNow";
-type Calendar = {
-  id: string;
-  name: string;
-  type: string;
-};
+
 
 const Home = () => {
-  const { user, setUser } = useGlobalContext();
+  const { user, setUser, calendarSource, setCalendarSource, eventInMemory } = useGlobalContext();
   const auth = getAuth();
-  const [calendarSource, setCalendarSource] = useState<Calendar>({
-    id: "",
-    name: "",
-    type: "",
-  });
+  
   const [calendarEvents, setCalendarEvents] = useState({
     breakfast: { title: "Breakfast" },
     lunch: { title: "Lunch" },
@@ -38,15 +30,20 @@ const Home = () => {
         const calendars = await Calendar.getCalendarsAsync(
           Calendar.EntityTypes.EVENT
         );
+        
         const calSource = calendars.filter((calendar) => {
           return calendar.title === "Expo Calendar";
-        })[0].source;
-        setCalendarSource(calSource);
-
+        })[0].source.id;
+        const calId = calendars.filter((calendar) => {
+          return calendar.title === "Expo Calendar";
+        })[0].id;
+        setCalendarSource({source: calSource, id: calId });
+        
         const time1 = getStartOfDay(date);
         const time2 = getEndOfDay(date);
 
-        const events = await viewCalendarEvents(calSource.id, time1, time2);
+        const events = await viewCalendarEvents(calendarSource.source, time1, time2)  
+          
         if (events.length === 0) {
           setCalendarEvents({
             breakfast: { title: "Breakfast" },
@@ -62,7 +59,7 @@ const Home = () => {
         }
       }
     })();
-  }, [date]);
+  }, [date, eventInMemory]);
 
   const logout = () => {
     auth.signOut();
@@ -99,6 +96,8 @@ async function viewCalendarEvents(id: string, start: Date, end: Date) {
     return {
       title: meal,
       meal: choice,
+      notes: event.notes,
+      id: event.id,
       start: event.startDate,
       end: event.endDate,
     };

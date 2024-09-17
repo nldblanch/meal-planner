@@ -13,12 +13,20 @@ const GlobalProvider = ({ children }) => {
     userToken: null,
   });
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(false);
   const [eventInMemory, setEventInMemory] = useState({
     date: null,
     title: null,
   });
-
+  // type Calendar = {
+  //   id: string;
+  //   name: string;
+  //   type: string;
+  // };
+  const [calendarSource, setCalendarSource] = useState({
+    id: "",
+    name: "",
+    type: "",
+  });
   useEffect(() => {}, []);
 
   return (
@@ -28,10 +36,10 @@ const GlobalProvider = ({ children }) => {
         dispatchSignedIn,
         user,
         setUser,
-        loading,
-        setLoading,
         eventInMemory,
         setEventInMemory,
+        calendarSource,
+        setCalendarSource
       }}
     >
       {children}
