@@ -3,7 +3,7 @@ import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 
-const Create = () => {
+const Recipes = () => {
   return (
     <SafeAreaView>
 
@@ -13,4 +13,4 @@ const Create = () => {
   );
 };
 
-export default Create;
+export default Recipes;

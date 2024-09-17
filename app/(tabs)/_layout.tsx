@@ -31,13 +31,13 @@ const TabsLayout = () => {
     <>
       <Tabs
         screenOptions={{
-          tabBarActiveTintColor: "black",
-          tabBarInactiveTintColor: "#BBB",
+          tabBarActiveTintColor: "white",
+          tabBarInactiveTintColor: "#555",
           tabBarShowLabel: false,
           tabBarStyle: {
-            backgroundColor: "#fff",
+            backgroundColor: "rgb(9, 9, 11)",
             borderTopWidth: 1,
-            borderTopColor: "#232533",
+            borderTopColor: "#555",
             paddingTop: 20,
             height: 100,
           },
@@ -103,14 +103,21 @@ const TabsLayout = () => {
             ),
           }}
         />
-         {/* <Tabs.Screen
-          name="search/[query]"
+        <Tabs.Screen
+          name="profile"
           options={{
-            title: "Search",
+            title: "Profile",
             headerShown: false,
-            tabBarButton: () => null,
+            tabBarIcon: ({ color, focused }) => (
+              <TabIcon
+                icon={icons.profile}
+                color={color}
+                name="Profile"
+                focused={focused}
+              />
+            ),
           }}
-        /> */}
+        />
       </Tabs>
     </>
   );

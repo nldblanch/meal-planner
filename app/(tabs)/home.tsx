@@ -1,9 +1,7 @@
-import { View, Text, Button, Platform } from "react-native";
+import { View, Button, Platform } from "react-native";
 import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useGlobalContext } from "@/contexts/GlobalProvider";
-import { getAuth } from "firebase/auth";
-import { router } from "expo-router";
 import * as Calendar from "expo-calendar";
 import { ScrollableCalendarStrip, CalendarEventContainer, Header } from "@/components";
 import {  
@@ -11,12 +9,11 @@ import {
   getEndOfDay,
   getStartOfDay,
 } from "../../scripts/utils/getDateNow";
-import Footer from "@/components/Footer";
+
 
 
 const Home = () => {
-  const { user, setUser, calendarSource, setCalendarSource, eventInMemory, mealInMemory } = useGlobalContext();
-  const auth = getAuth();
+  const { calendarSource, setCalendarSource, eventInMemory, mealInMemory } = useGlobalContext();
   
   const [calendarEvents, setCalendarEvents] = useState({
     breakfast: { title: "Breakfast" },
@@ -62,19 +59,13 @@ const Home = () => {
     })();
   }, [date, eventInMemory, mealInMemory]);
 
-  const logout = () => {
-    auth.signOut();
-    setUser(null);
-    router.replace("/");
-  };
+ 
   
   return (
-    <SafeAreaView className="flex flex-col grow items-center justify-center">
+    <SafeAreaView className="flex flex-col grow items-center justify-center bg-background dark:bg-darkBackground">
       <Header text="Home" />
-      <View className="w-full p-4">
-        <Text className="text-xl">Welcome back {user.uid}!</Text>
-      </View>
-      <View className="grow w-full border border-r-0 border-l-0 border-solid border-black">
+      
+      <View className="grow w-full">
         <ScrollableCalendarStrip setDate={setDate} />
         <CalendarEventContainer props={calendarEvents.breakfast} date={date} />
         <CalendarEventContainer props={calendarEvents.lunch}  date={date} />
@@ -83,7 +74,7 @@ const Home = () => {
           <Button title="Initialise calendar" onPress={createCalendar} />
         )}
       </View>
-      <Button title="Log out" onPress={logout} />
+      
       
     </SafeAreaView>
   );
