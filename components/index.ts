@@ -9,6 +9,9 @@ import Header from "./Header";
 import MealCard from "./MealCard";
 import ScrollableCalendarStrip from "./ScrollableCalendarStrip";
 import SearchBar from "./SearchBar";
+import Footer from "./Footer";
+import AddMealToCalendarButton from "./AddMealToCalendarButton";
+
 export {
   CustomButton,
   ListDropdown,
@@ -21,4 +24,6 @@ export {
   MealCard,
   ScrollableCalendarStrip,
   SearchBar,
+  Footer,
+  AddMealToCalendarButton,
 };

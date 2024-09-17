@@ -1,19 +1,10 @@
-import {
-  Image,
-  Linking,
-  Pressable,
-  ScrollView,
-  Text,
-  View,
-} from "react-native";
+import { Image, Linking, ScrollView, Text, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { CustomButton, Header } from "@/components";
-import { Redirect, router, useLocalSearchParams } from "expo-router";
+import { AddMealToCalendarButton, Header, Footer } from "@/components";
+import { router, useLocalSearchParams } from "expo-router";
 import { getMealById } from "@/scripts/mealApi";
 import { useGlobalContext } from "@/contexts/GlobalProvider";
-import * as Calendar from "expo-calendar";
-import {getStartOfDay, getEndOfDay} from "../../../../scripts/utils/getDateNow"
 const Meal = () => {
   const { meal_id } = useLocalSearchParams();
   const [meal, setMeal] = useState();
@@ -22,7 +13,8 @@ const Meal = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [instructionsVisible, setInstructionsVisible] =
     useState<boolean>(false);
-  const { eventInMemory, setEventInMemory, calendarSource } = useGlobalContext();
+  const { eventInMemory } =
+    useGlobalContext();
   useEffect(() => {
     if (meal_id) {
       getMealById(meal_id).then((meal) => {
@@ -96,29 +88,7 @@ const Meal = () => {
           )}
         </View>
         {eventInMemory && (
-          <CustomButton
-            title={"Add this meal"}
-            containerStyles={"border w-1/2 self-center mb-4 bg-zinc-200"}
-            handlePress={() => {
-              const eventData = {
-                startDate: getStartOfDay(eventInMemory.date), 
-                endDate: getEndOfDay(eventInMemory.date),
-                notes: `Meal ID: ${meal.idMeal}`,
-                title: `${eventInMemory.title}: ${meal.strMeal}`,
-              }
-              Calendar.createEventAsync(calendarSource.id, eventData) 
-              .then(() => {
-                setEventInMemory({date: "", title: ""})
-                // return <Redirect href={"/(tabs)/home"} />
-                router.replace("/(tabs)/home")
-              })
-              .catch((err) => {
-                console.log(err)
-              })
-            }}
-            textStyles={""}
-            isLoading={false}
-          />
+          <AddMealToCalendarButton meal={meal} />
         )}
         <View className="flex flex-col items-center">
           <Text className="text-2xl font-semibold pl-2 pb-2 text-left w-full">
@@ -155,7 +125,7 @@ const Meal = () => {
         {instructionsVisible && (
           <Text className="text-lg pl-2">{meal.strInstructions}</Text>
         )}
-        <View className="h-24"></View>
+        <Footer />
       </ScrollView>
     </SafeAreaView>
   );

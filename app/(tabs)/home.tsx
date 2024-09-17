@@ -11,6 +11,7 @@ import {
   getEndOfDay,
   getStartOfDay,
 } from "../../scripts/utils/getDateNow";
+import Footer from "@/components/Footer";
 
 
 const Home = () => {
@@ -83,6 +84,7 @@ const Home = () => {
         )}
       </View>
       <Button title="Log out" onPress={logout} />
+      
     </SafeAreaView>
   );
 };
