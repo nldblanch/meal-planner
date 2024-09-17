@@ -52,9 +52,7 @@ const CalendarEventContainer: React.FC<CalendarEventContainerProps> = ({
     setAddModalVisible,
     title,
   };
-  const colorScheme = Appearance.getColorScheme();
-
-  const buttonColor = colorScheme === "dark" ? "white" : "black";
+  
   return (
     <View className={`p-2 max-h-32 w-full my-1 `}>
       <View className="flex flex-row items-start justify-between max-h-16 border-b">
@@ -83,7 +81,7 @@ const CalendarEventContainer: React.FC<CalendarEventContainerProps> = ({
           meal ? (
             <Button
               title="Replace"
-              color={buttonColor}
+              color={"white"}
               accessibilityLabel="Replace this meal"
               onPress={() => {
                 const eventData = {
@@ -105,7 +103,7 @@ const CalendarEventContainer: React.FC<CalendarEventContainerProps> = ({
           ) : (
             <Button
               title="Add"
-              color={buttonColor}
+              color={"white"}
               accessibilityLabel="Add the meal"
               onPress={() => {
                 const eventData = {
@@ -128,14 +126,14 @@ const CalendarEventContainer: React.FC<CalendarEventContainerProps> = ({
         ) : meal ? (
           <Button
             title="Edit"
-            color={buttonColor}
+            color={"white"}
             accessibilityLabel="Edit this meal"
             onPress={() => setEditModalVisible(true)}
           />
         ) : (
           <Button
             title="Add"
-            color={buttonColor}
+            color={"white"}
             accessibilityLabel="Add a meal"
             onPress={() => {
               setEventInMemory({ date, title });
