@@ -69,7 +69,7 @@ const MealCard: React.FC<Meal> = ({ meal }) => {
         source={{ url: meal.strMealThumb }}
       />
       <Text className="w-full text-left text-lg font-bold p-1">{meal.strMeal}</Text>
-      <Text className="absolute left-0 italic p-1 w-full bg-faint">{meal.strArea}</Text>
+      <Text className="absolute left-0 italic p-1 w-full bg-faint dark:bg-darkFaint text-text dark:text-darkText font-semibold">{meal.strArea}</Text>
     </Pressable>
   );
 };

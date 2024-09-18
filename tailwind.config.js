@@ -14,7 +14,7 @@ module.exports = {
         faint: "#ffffff99",
         darkText: "rgb(255, 255, 255)",
         darkBackground: "rgb(9, 9, 11)",
-        
+        darkFaint: "#00000044"
       },
       aspectRatio: {
         "2/3": "2 / 3",

@@ -1,4 +1,3 @@
-import { View, Text } from "react-native";
 import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Header from "@/components/Header";
@@ -72,7 +71,7 @@ const Search = () => {
     })
   }, [])
   return (
-    <SafeAreaView className="w-full h-screen flex flex-col p-0 items-center">
+    <SafeAreaView className="w-full h-screen flex flex-col p-0 items-center bg-background dark:bg-darkBackground">
       <Header text="Search" />
       <SearchBar />
       <Categories />

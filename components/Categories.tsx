@@ -10,7 +10,7 @@ function Scroller() {
     });
   }, []);
   return (
-    <View className="h-1/5 bg-zinc-200">
+    <View className="h-1/5">
       <ScrollView
         horizontal={true}
         showsHorizontalScrollIndicator={false}
@@ -29,7 +29,7 @@ function Scroller() {
                   source={{ url: category.strCategoryThumb }}
                   alt={`${category.strCategory}`}
                 />
-                <Text className="font-bold text-md">
+                <Text className="font-bold text-md text-text dark:text-darkText">
                   {category.strCategory}
                 </Text>
               </View>
@@ -43,12 +43,12 @@ function Scroller() {
 function Categories() {
   return (
     <>
-      <View className="w-full border border-solid"></View>
-      <Text className="font-bold text-xl w-full bg-zinc-200 underline pl-2">
+      <View className="w-full mt-4 border border-solid border-text dark:border-darkText"></View>
+      <Text className="font-bold text-xl w-full underline pl-2 text-accent1">
         Browse Categories
       </Text>
       <Scroller />
-      <View className="w-full border border-solid mb-4"></View>
+      <View className="w-full border border-solid mb-4 border-text dark:border-darkText"></View>
     </>
   );
 }
