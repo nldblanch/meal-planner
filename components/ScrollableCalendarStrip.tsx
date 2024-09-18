@@ -2,7 +2,6 @@ import { getDateTime } from "@/scripts/utils/getDateNow";
 import { View, StyleSheet } from "react-native";
 import CalendarStrip from "react-native-calendar-strip";
 import { Appearance } from "react-native";
-
 type ScrollableCalendarStripProps = {
   setDate: React.Dispatch<any>;
 };
@@ -12,35 +11,42 @@ const ScrollableCalendarStrip: React.FC<ScrollableCalendarStripProps> = ({
   const colorScheme = Appearance.getColorScheme();
 
   const headerColour = colorScheme === "dark" ? "white" : "black";
+  const iconBackgroundColor = colorScheme === "dark" ? "#ffffff99" : "#000000cc"
   const currentDate = getDateTime();
   return (
     <View className="w-full bg-background dark:bg-darkBackground py-2 h-[20%]">
       <CalendarStrip
-        scrollable
+        
+        daySelectionAnimation={{type: 'border', duration: 400, borderWidth: 1, borderHighlightColor: headerColour}}
+        // scrollable
+        // scrollerPaging
         style={{
           height: "100%",
           paddingTop: 0,
           paddingBottom: 5,
           paddingRight: 5,
         }}
+        
         calendarHeaderStyle={{
           fontSize: 25,
           fontWeight: "bold",
           paddingBottom: 5,
           color: headerColour,
         }}
-        dayContainerStyle={{ backgroundColor: "rgb(100, 138, 190)" }}
         selectedDate={new Date(currentDate)}
-        dateNumberStyle={{ color: "black" }}
-        dateNameStyle={{ color: "black" }}
+        dateNumberStyle={{ color: headerColour }}
+        dateNameStyle={{ color: headerColour }}
         highlightDateNameStyle={{ color: "white" }}
         highlightDateNumberStyle={{ color: "white" }}
         highlightDateContainerStyle={{ backgroundColor: "rgb(65, 152, 223)" }}
+        useNativeDriver
         iconContainer={{ flex: 0.1 }}
-        iconStyle={{backgroundColor: "rgb(100, 138, 190)", padding: 10, paddingTop: 15, borderRadius: "100%"}}
+        iconStyle={{backgroundColor: iconBackgroundColor, padding: 10, paddingTop: 15, borderRadius: "100%"}}
         onDateSelected={(date) => {
+          // setCurrentDate(date.toDate());
           setDate(date);
         }}
+        
       />
     </View>
   );

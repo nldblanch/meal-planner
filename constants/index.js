@@ -1,3 +1,3 @@
 import icons from "./icons";
-
-export { icons };
+import { MealCardInterface } from "./interfaces"
+export { icons, MealCardInterface };
