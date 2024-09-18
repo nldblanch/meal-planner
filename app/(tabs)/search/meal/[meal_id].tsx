@@ -58,7 +58,7 @@ const Meal = () => {
       </SafeAreaView>
     );
   return (
-    <SafeAreaView>
+    <SafeAreaView className="bg-background dark:bg-darkBackground">
       <Header
         text={meal.strMeal}
         link={meal.strSource ? meal.strSource : null}
@@ -70,17 +70,17 @@ const Meal = () => {
         />
         <View className="w-full px-2">
           <View className="w-full flex flex-row justify-between">
-            <Text className="text-lg font-semibold">{meal.strCategory}</Text>
-            <Text className="text-lg font-semibold">{meal.strArea}</Text>
+            <Text className="text-lg font-semibold text-text dark:text-darkText">{meal.strCategory}</Text>
+            <Text className="text-lg font-semibold text-text dark:text-darkText">{meal.strArea}</Text>
           </View>
           {meal.strTags && (
-            <Text className="text-lg font-semibold">
+            <Text className="text-lg font-semibold text-text dark:text-darkText">
               {meal.strTags.split(",").join(", ")}
             </Text>
           )}
           {meal.strYoutube && (
             <Text
-              className="text-lg text-blue-800 mb-4"
+              className="text-lg text-blue-800 dark:text-blue-500 mb-4"
               onPress={() => Linking.openURL(meal.strYoutube)}
             >
               View on YouTube
@@ -91,7 +91,7 @@ const Meal = () => {
           <AddMealToCalendarButton meal={meal} />
         )}
         <View className="flex flex-col items-center">
-          <Text className="text-2xl font-semibold pl-2 pb-2 text-left w-full">
+          <Text className="text-2xl font-semibold pl-2 pb-2 text-left w-full text-text dark:text-darkText">
             Ingredients
           </Text>
           {ingredients &&
@@ -99,15 +99,15 @@ const Meal = () => {
               return (
                 <View
                   key={i}
-                  className="flex flex-row w-[95%] flex-wrap grow shrink py-1 border-b-2 border-b-zinc-300"
+                  className="flex flex-row w-[95%] flex-wrap grow shrink py-1 border-b-2 border-b-darkFaint dark:border-b-faint text-text dark:text-darkText"
                 >
                   {measures[i].toLowerCase() === "to serve" ||
                   measures[i].toLowerCase() === "to glaze" ? (
-                    <Text className="text-lg">{`${ingredient}, ${measures[
+                    <Text className="text-lg text-text dark:text-darkText">{`${ingredient}, ${measures[
                       i
                     ].toLowerCase()}`}</Text>
                   ) : (
-                    <Text className="text-lg">{`${
+                    <Text className="text-lg text-text dark:text-darkText">{`${
                       measures[i]
                     } ${ingredient.toLowerCase()}`}</Text>
                   )}
@@ -118,12 +118,12 @@ const Meal = () => {
 
         <Text
           onPress={() => setInstructionsVisible(!instructionsVisible)}
-          className="pl-2 text-2xl font-semibold mt-2"
+          className="pl-2 text-2xl font-semibold mt-2 text-text dark:text-darkText"
         >
           {instructionsVisible ? "Hide" : "Show"} Instructions -{">"}
         </Text>
         {instructionsVisible && (
-          <Text className="text-lg pl-2">{meal.strInstructions}</Text>
+          <Text className="text-lg pl-2 text-text dark:text-darkText">{meal.strInstructions}</Text>
         )}
         <Footer />
       </ScrollView>

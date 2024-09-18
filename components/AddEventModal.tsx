@@ -25,38 +25,38 @@ const AddEventModal: React.FC<EditEventModalProps> = ({ modalProps }) => {
         }}
         >
         <View
-          className="flex justify-center items-center h-full"
-          style={styles.centeredView}
+          className="flex justify-center items-center h-full bg-darkFaint dark:bg-faint"
+        
           >
-          <View className=" flex flex-col justify-center items-center m-4 bg-white rounded-2xl p-1 w-4/5">
-            <Text className="justify-self-start mb-8 text-4xl mt-2 underline">
+          <View className=" flex flex-col justify-center items-center m-4 bg-background dark:bg-darkBackground rounded-2xl p-1 w-4/5">
+            <Text className="justify-self-start mb-8 text-4xl mt-2 text-text dark:text-darkText underline">
               Add {title}
             </Text>
 
             <Pressable
-              className="mb-4 bg-slate-500 w-11/12 p-4 rounded-sm"
+              className="mb-4 bg-secondary1 w-11/12 p-4 rounded-sm"
               onPress={() => {
                 setAddModalVisible(!addModalVisible)
                 router.push("/(tabs)/search/meals")
               }}
             >
-              <Text className="text-white text-center font-bold">
+              <Text className="text-white text-xl text-center font-semibold">
                 Search for a meal
               </Text>
             </Pressable>
             <Pressable
-              className="mb-4 bg-slate-500 w-11/12 p-4 rounded-sm"
+              className="mb-4 bg-secondary1 w-11/12 p-4 rounded-sm"
               onPress={() => {
                 setAddModalVisible(!addModalVisible)
                 router.push("/(tabs)/recipes")
               }}
             >
-              <Text className="text-white text-center font-bold">
+              <Text className="text-white text-center text-xl font-semibold">
                 Choose a meal I created
               </Text>
             </Pressable>
             <Pressable
-              className="mt-4 mb-2 rounded-xl bg-blue-500 p-3"
+              className="mt-4 mb-2 rounded-xl bg-primary1 p-3"
               onPress={() => setAddModalVisible(!addModalVisible)}
             >
               <Text className="text-white font-bold">Cancel</Text>

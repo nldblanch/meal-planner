@@ -97,7 +97,7 @@ const AddMealToCalendarButton: React.FC<Props> = ({ meal }) => {
     <>
       <CustomButton
         title={"Add this meal"}
-        containerStyles={"border w-1/2 self-center mb-4 bg-zinc-200"}
+        containerStyles={"border w-1/2 self-center mb-4 bg-secondary1"}
         handlePress={() => {
           if (!eventInMemory.date && !eventInMemory.title) {
             setMealInMemory({...meal})
@@ -112,7 +112,7 @@ const AddMealToCalendarButton: React.FC<Props> = ({ meal }) => {
                 console.log(err);
               });
         }}
-        textStyles={""}
+        textStyles={"text-white font-semibold"}
         isLoading={false}
       />
       <AddMealModal modalProps={modalProps} />
@@ -166,9 +166,9 @@ const AddMealModal: React.FC<AddMealModal> = ({
           setModalVisible(!modalVisible);
         }}
       >
-        <View className="flex justify-center items-center h-full bg-faint">
-          <View className=" flex flex-col justify-center items-center m-4 bg-white rounded-2xl p-1 w-11/12 h-[80%] border shadow-md">
-            <Text className="justify-self-start mb-8 text-4xl mt-2 underline">
+        <View className="flex justify-center items-center h-full bg-faint dark:bg-darkFaint">
+          <View className=" flex flex-col justify-center items-center m-4 bg-background dark:bg-darkBackground rounded-2xl p-1 w-11/12 h-[80%] border shadow-md">
+            <Text className="justify-self-start mb-8 text-4xl mt-2 underline text-text dark:text-darkText">
               Add this meal
             </Text>
             <ScrollableCalendarStrip setDate={setDate} />
@@ -177,7 +177,7 @@ const AddMealModal: React.FC<AddMealModal> = ({
             <CalendarEventContainer props={calendarEvents.dinner}  date={date} modalVisit={true}/>
 
             <Pressable
-              className="mt-4 mb-2 rounded-xl bg-blue-500 p-3"
+              className="mt-4 mb-2 rounded-xl bg-primary1 p-3"
               onPress={() => setModalVisible(!modalVisible)}
             >
               <Text className="text-white font-bold">Cancel</Text>
