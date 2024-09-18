@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Appearance, Button, Text, View } from "react-native";
+import { Button, Text, View } from "react-native";
 import EditEventModal from "./EditEventModal";
 import AddEventModal from "./AddEventModal";
 import { useGlobalContext } from "@/contexts/GlobalProvider";

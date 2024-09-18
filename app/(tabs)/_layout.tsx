@@ -1,6 +1,6 @@
 import React from "react";
 import { Tabs } from "expo-router";
-import { Image, Text, View } from "react-native";
+import { Appearance, Image, Text, View } from "react-native";
 import { icons } from "@/constants";
 type Args = {
   icon: any;
@@ -27,15 +27,20 @@ const TabIcon = ({ icon, color, name, focused }: Args) => {
   );
 };
 const TabsLayout = () => {
+  const colorScheme = Appearance.getColorScheme();
+
+  const tabBackgroundColour = colorScheme === "dark" ? "rgb(9, 9, 11)" : "white";
+  const activeTabIconColour = colorScheme === "dark" ? "white" : "black"
+  const inactiveTabIconColor = colorScheme === "dark" ? "#555" : "#BBB"
   return (
     <>
       <Tabs
         screenOptions={{
-          tabBarActiveTintColor: "white",
-          tabBarInactiveTintColor: "#555",
+          tabBarActiveTintColor: activeTabIconColour,
+          tabBarInactiveTintColor: inactiveTabIconColor,
           tabBarShowLabel: false,
           tabBarStyle: {
-            backgroundColor: "rgb(9, 9, 11)",
+            backgroundColor: tabBackgroundColour,
             borderTopWidth: 1,
             borderTopColor: "#555",
             paddingTop: 20,
