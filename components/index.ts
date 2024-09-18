@@ -11,7 +11,7 @@ import ScrollableCalendarStrip from "./ScrollableCalendarStrip";
 import SearchBar from "./SearchBar";
 import Footer from "./Footer";
 import AddMealToCalendarButton from "./AddMealToCalendarButton";
-
+import { BoldText } from "./BoldText";
 export {
   CustomButton,
   ListDropdown,
@@ -26,4 +26,5 @@ export {
   SearchBar,
   Footer,
   AddMealToCalendarButton,
+  BoldText
 };

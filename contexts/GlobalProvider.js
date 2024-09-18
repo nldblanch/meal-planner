@@ -24,8 +24,7 @@ const GlobalProvider = ({ children }) => {
 
   const [calendarSource, setCalendarSource] = useState({
     id: "",
-    name: "",
-    type: "",
+    source: "",
   });
   useEffect(() => {}, []);
 
