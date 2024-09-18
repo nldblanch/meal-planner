@@ -103,11 +103,10 @@ const Home = () => {
         const time2 = getEndOfDay(date);
 
         const events = await viewCalendarEvents(
-          calendarSource.source,
+          calendarSource.id,
           time1,
           time2
         );
-
         if (events.length === 0) {
           setCalendarEvents({
             breakfast: { title: "Breakfast" },

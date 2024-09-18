@@ -28,6 +28,15 @@ const SearchBar: React.FC<SearchBarProps> = ({ initialQuery }) => {
         placeholder="Search for a recipe"
         placeholderTextColor={placeHolderTextColor}
         onChangeText={(e) => setQuery(e)}
+        onSubmitEditing={() => {
+          if (query === "")
+            return Alert.alert(
+              "Missing Query",
+              "Please input something to search results across database"
+            );
+
+          router.push(`/(tabs)/search/${query}`);
+        }}
       />
 
       <TouchableOpacity

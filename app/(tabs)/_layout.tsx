@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Tabs } from "expo-router";
 import { Appearance, Image, Text, View } from "react-native";
 import { icons } from "@/constants";
@@ -28,8 +28,10 @@ const TabIcon = ({ icon, color, name, focused }: Args) => {
 };
 const TabsLayout = () => {
   const colorScheme = Appearance.getColorScheme();
-
-  const tabBackgroundColour = colorScheme === "dark" ? "rgb(9, 9, 11)" : "white";
+  const [tabBackgroundColor, setTabBackgroundColor] = useState("white")
+  useEffect(() => {
+    setTabBackgroundColor(colorScheme === "dark" ? "rgb(9, 9, 11)" : "white")
+  },[colorScheme])
   const activeTabIconColour = colorScheme === "dark" ? "white" : "black"
   const inactiveTabIconColor = colorScheme === "dark" ? "#555" : "#BBB"
   return (
@@ -40,7 +42,7 @@ const TabsLayout = () => {
           tabBarInactiveTintColor: inactiveTabIconColor,
           tabBarShowLabel: false,
           tabBarStyle: {
-            backgroundColor: tabBackgroundColour,
+            backgroundColor: tabBackgroundColor,
             borderTopWidth: 1,
             borderTopColor: "#555",
             paddingTop: 20,
