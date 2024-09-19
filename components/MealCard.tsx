@@ -8,7 +8,7 @@ type MealCardProps = {
 };
 const MealCard: React.FC<MealCardProps> = ({ meal, containerStyle }) => {
   return (
-    <Pressable className={`w-5/12 aspect-2/3 overflow-hidden flex flex-col items-center rounded-md mt-4 ${containerStyle}`}
+    <Pressable className={`w-5/12 aspect-2/3 overflow-hidden flex flex-col items-center rounded-md mt-4 bg-zinc-300 ${containerStyle}`}
     onPress={() => {router.push(`/(tabs)/search/meal/${meal.idMeal}`)}}
     >
       <Image
