@@ -56,7 +56,6 @@ const Lists = () => {
     getListsByUserId(user.uid)
       .then(({ lists }) => {
         setLists(lists);
-
         setLoading(false);
       })
       .catch((err) => {
@@ -73,6 +72,16 @@ const Lists = () => {
       });
     }
   }, [listId]);
+  const handlePress = () => {
+    setLoading(true);
+    return addListToUserId(user.uid, listName).then(({ user: { lists } }) => {
+      const list_id = lists[lists.length - 1]
+      setLists((prev) => [...prev, {isPrivate: true, list_id, list_name: listName}]);
+      onChangeListName("");
+      setListId(list_id)
+      setLoading(false);
+    });
+  };
 
   return (
     <SafeAreaView className="w-full h-screen">
@@ -110,7 +119,7 @@ const Lists = () => {
           onPressFn={() =>
             !listName
               ? Alert.alert("Error", "Please enter value.")
-              : addListToUserId(user.uid, listName)
+              : handlePress()
           }
           loading={loading}
         />

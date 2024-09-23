@@ -31,7 +31,6 @@ export const addListToUserId = (user_id: string, list_name: string) => {
     return apiClient
       .post(`/users/${user_id}/lists`, { list_name })
       .then(({ data }) => {
-        console.log(data);
         return data;
       })
       .catch((err) => {
