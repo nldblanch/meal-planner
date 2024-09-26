@@ -25,6 +25,7 @@ type ItemListProps = {
 const Lists = () => {
   const { user } = useGlobalContext();
   const [listName, onChangeListName] = useState("");
+  const [headerListName, setHeaderListName] = useState("");
   const [lists, setLists] = useState<List[]>([]);
   const [loading, setLoading] = useState(true);
   const [listItems, setListItems] = useState<Item[]>([]);
@@ -75,10 +76,13 @@ const Lists = () => {
   const handlePress = () => {
     setLoading(true);
     return addListToUserId(user.uid, listName).then(({ user: { lists } }) => {
-      const list_id = lists[lists.length - 1]
-      setLists((prev) => [...prev, {isPrivate: true, list_id, list_name: listName}]);
+      const list_id = lists[lists.length - 1];
+      setLists((prev) => [
+        ...prev,
+        { isPrivate: true, list_id, list_name: listName },
+      ]);
       onChangeListName("");
-      setListId(list_id)
+      setListId(list_id);
       setLoading(false);
     });
   };
@@ -86,11 +90,18 @@ const Lists = () => {
   return (
     <SafeAreaView className="w-full h-screen">
       <Header text="Shopping Lists" />
-      <View className="flex flex-col justify-center items-center mx-12">
+      <View className="flex flex-col justify-center items-center mx-2">
         {loading && <Text>Loading</Text>}
         {!loading &&
           (lists.length > 0 ? (
-            <ListDropdown data={lists} setListId={setListId} />
+            <View className={`w-full flex flex-row gap-2 items-center px-2 justify-between ${!headerListName ? "justify-center" : ""}`}>
+              <ListDropdown
+                data={lists}
+                setListId={setListId}
+                setHeaderListName={setHeaderListName}
+              />
+              {headerListName && <Text className="text-3xl underline">{headerListName}</Text>}
+            </View>
           ) : (
             <Text>No lists found.</Text>
           ))}

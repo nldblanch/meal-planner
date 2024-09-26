@@ -28,5 +28,5 @@ export {
   Footer,
   AddMealToCalendarButton,
   BoldText,
-  Favourites
+  Favourites,
 };

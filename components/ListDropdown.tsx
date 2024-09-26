@@ -6,19 +6,21 @@ type List = {
     isPrivate: boolean;
     list_name: string;
 }
-function ListDropdown({data, setListId} : any) {
+function ListDropdown({data, setListId, setHeaderListName} : any) {
 
   return (
     <SelectDropdown
     data={data}
     onSelect={(selectedItem, index) => {
       setListId(selectedItem.list_id)
+      setHeaderListName(selectedItem.list_name)
     }}
     renderButton={(selectedItem, isOpened) => {
       return (
         <View style={styles.dropdownButtonStyle}>
           <Text style={styles.dropdownButtonTxtStyle}>
-            {selectedItem && selectedItem.list_name || 'Select list'}
+            {'Select'}
+            {/* selectedItem && selectedItem.list_name ||  */}
           </Text>
         </View>
       );
@@ -37,7 +39,7 @@ function ListDropdown({data, setListId} : any) {
 }
 const styles = StyleSheet.create({
   dropdownButtonStyle: {
-    width: '50%',
+    width: '25%',
     height: 50,
     backgroundColor: '#BBB',
     borderRadius: 12,
@@ -64,6 +66,8 @@ const styles = StyleSheet.create({
   dropdownMenuStyle: {
     backgroundColor: '#E9ECEF',
     borderRadius: 8,
+    width: "94%",
+
   },
   dropdownItemStyle: {
     width: '100%',

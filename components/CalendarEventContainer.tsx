@@ -1,7 +1,5 @@
 import { useState } from "react";
 import { Button, Text, View } from "react-native";
-import EditEventModal from "./EditEventModal";
-import AddEventModal from "./AddEventModal";
 import { useGlobalContext } from "@/contexts/GlobalProvider";
 import {
   getApproxEndTime,
@@ -9,6 +7,8 @@ import {
 } from "@/scripts/utils/getMealTimes";
 import * as Calendar from "expo-calendar";
 import { router } from "expo-router";
+import EditEventModal from "./EditEventModal";
+import AddEventModal from "./AddEventModal";
 type CalendarEvent = {
   title: string;
   meal: string;
@@ -39,6 +39,9 @@ const CalendarEventContainer: React.FC<CalendarEventContainerProps> = ({
   }`;
   const [editModalVisible, setEditModalVisible] = useState(false);
   const [addModalVisible, setAddModalVisible] = useState(false);
+  const [addIngredientsModalVisible, setAddIngredientsModalVisible] =
+    useState(false);
+
   const editModalProps = {
     editModalVisible,
     setEditModalVisible,
@@ -52,7 +55,8 @@ const CalendarEventContainer: React.FC<CalendarEventContainerProps> = ({
     setAddModalVisible,
     title,
   };
-  
+
+
   return (
     <View className={`p-2 max-h-32 w-full my-1 `}>
       <View className="flex flex-row items-start justify-between max-h-16 border-b">
@@ -64,7 +68,11 @@ const CalendarEventContainer: React.FC<CalendarEventContainerProps> = ({
           >
             {title}
           </Text>
-          <Text className={`text-xl font-semibold ${meal ? "text-text dark:text-darkText" : "text-negative1"}`}>
+          <Text
+            className={`text-xl font-semibold ${
+              meal ? "text-text dark:text-darkText" : "text-negative1"
+            }`}
+          >
             {meal ? meal : "Nothing selected"}
           </Text>
         </View>
@@ -76,7 +84,11 @@ const CalendarEventContainer: React.FC<CalendarEventContainerProps> = ({
           )}
         </View>
       </View>
-      <View className={`mt-2 ml-auto w-2/6 border border-solid ${meal ? "bg-secondary1" : "bg-negative1"}`}>
+      <View
+        className={`mt-2 ml-auto w-2/6 border border-solid ${
+          meal ? "bg-secondary1" : "bg-negative1"
+        }`}
+      >
         {modalVisit === true ? (
           meal ? (
             <Button
