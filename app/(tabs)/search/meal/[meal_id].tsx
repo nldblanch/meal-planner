@@ -13,8 +13,7 @@ const Meal = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [instructionsVisible, setInstructionsVisible] =
     useState<boolean>(false);
-  const { eventInMemory } =
-    useGlobalContext();
+  const { eventInMemory } = useGlobalContext();
   useEffect(() => {
     if (meal_id) {
       getMealById(meal_id).then((meal) => {
@@ -49,7 +48,7 @@ const Meal = () => {
     } else {
       router.replace("/(tabs)/search");
     }
-  }, []);
+  }, [meal_id]);
 
   if (loading)
     return (
@@ -70,8 +69,12 @@ const Meal = () => {
         />
         <View className="w-full px-2">
           <View className="w-full flex flex-row justify-between">
-            <Text className="text-lg font-semibold text-text dark:text-darkText">{meal.strCategory}</Text>
-            <Text className="text-lg font-semibold text-text dark:text-darkText">{meal.strArea}</Text>
+            <Text className="text-lg font-semibold text-text dark:text-darkText">
+              {meal.strCategory}
+            </Text>
+            <Text className="text-lg font-semibold text-text dark:text-darkText">
+              {meal.strArea}
+            </Text>
           </View>
           {meal.strTags && (
             <Text className="text-lg font-semibold text-text dark:text-darkText">
@@ -87,9 +90,7 @@ const Meal = () => {
             </Text>
           )}
         </View>
-        {eventInMemory && (
-          <AddMealToCalendarButton meal={meal} />
-        )}
+        {eventInMemory && <AddMealToCalendarButton meal={meal} />}
         <View className="flex flex-col items-center">
           <Text className="text-2xl font-semibold pl-2 pb-2 text-left w-full text-text dark:text-darkText">
             Ingredients
@@ -101,16 +102,17 @@ const Meal = () => {
                   key={i}
                   className="flex flex-row w-[95%] flex-wrap grow shrink py-1 border-b-2 border-b-darkFaint dark:border-b-faint text-text dark:text-darkText"
                 >
-                  {measures[i].toLowerCase() === "to serve" ||
-                  measures[i].toLowerCase() === "to glaze" ? (
-                    <Text className="text-lg text-text dark:text-darkText">{`${ingredient}, ${measures[
-                      i
-                    ].toLowerCase()}`}</Text>
-                  ) : (
-                    <Text className="text-lg text-text dark:text-darkText">{`${
-                      measures[i]
-                    } ${ingredient.toLowerCase()}`}</Text>
-                  )}
+                  {measures[i] &&
+                    (measures[i].toLowerCase() === "to serve" ||
+                    measures[i].toLowerCase() === "to glaze" ? (
+                      <Text className="text-lg text-text dark:text-darkText">{`${ingredient}, ${measures[
+                        i
+                      ].toLowerCase()}`}</Text>
+                    ) : (
+                      <Text className="text-lg text-text dark:text-darkText">{`${
+                        measures[i]
+                      } ${ingredient.toLowerCase()}`}</Text>
+                    ))}
                 </View>
               );
             })}
@@ -123,7 +125,9 @@ const Meal = () => {
           {instructionsVisible ? "Hide" : "Show"} Instructions -{">"}
         </Text>
         {instructionsVisible && (
-          <Text className="text-lg pl-2 text-text dark:text-darkText">{meal.strInstructions}</Text>
+          <Text className="text-lg pl-2 text-text dark:text-darkText">
+            {meal.strInstructions}
+          </Text>
         )}
         <Footer />
       </ScrollView>

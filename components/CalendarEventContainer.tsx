@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { Button, Text, View } from "react-native";
 import { useGlobalContext } from "@/contexts/GlobalProvider";
+import padding from "../scripts/utils/textPadding"
 import {
   getApproxEndTime,
   getApproxStartTime,
 } from "@/scripts/utils/getMealTimes";
 import * as Calendar from "expo-calendar";
-import { router } from "expo-router";
+import { Link, router } from "expo-router";
 import EditEventModal from "./EditEventModal";
 import AddEventModal from "./AddEventModal";
 type CalendarEvent = {
@@ -39,8 +40,6 @@ const CalendarEventContainer: React.FC<CalendarEventContainerProps> = ({
   }`;
   const [editModalVisible, setEditModalVisible] = useState(false);
   const [addModalVisible, setAddModalVisible] = useState(false);
-  const [addIngredientsModalVisible, setAddIngredientsModalVisible] =
-    useState(false);
 
   const editModalProps = {
     editModalVisible,
@@ -55,8 +54,6 @@ const CalendarEventContainer: React.FC<CalendarEventContainerProps> = ({
     setAddModalVisible,
     title,
   };
-
-
   return (
     <View className={`p-2 max-h-32 w-full my-1 `}>
       <View className="flex flex-row items-start justify-between max-h-16 border-b">
@@ -84,75 +81,93 @@ const CalendarEventContainer: React.FC<CalendarEventContainerProps> = ({
           )}
         </View>
       </View>
-      <View
-        className={`mt-2 ml-auto w-2/6 border border-solid ${
-          meal ? "bg-secondary1" : "bg-negative1"
-        }`}
-      >
-        {modalVisit === true ? (
-          meal ? (
-            <Button
-              title="Replace"
-              color={"white"}
-              accessibilityLabel="Replace this meal"
-              onPress={() => {
-                const eventData = {
-                  startDate: getApproxStartTime(title, new Date(startTime)),
-                  endDate: getApproxEndTime(title, new Date(endTime)),
-                  notes: `Meal ID: ${mealInMemory.idMeal}`,
-                  title: `${title}: ${mealInMemory.strMeal}`,
-                };
-                return Calendar.updateEventAsync(id, eventData)
-                  .then(() => {
-                    setMealInMemory(null);
-                    router.replace("/(tabs)/home");
-                  })
-                  .catch((err) => {
-                    console.log(err);
-                  });
+      <View className="w-full flex flex-row">
+        {notes && (
+          <View className="w-2/6 mt-2 border border-solid bg-primary1 flex flex-col items-center justify-center">
+            <Link
+            className="w-full"
+              replace
+              href={{
+                pathname: "/(tabs)/search/meal/[meal_id]",
+                params: { meal_id: notes.split(": ")[1] },
               }}
+            >
+              <Text className="text-white text-lg text-center font-semibold" style={{...padding(20,20,20,20)}}>
+                Recipe
+              </Text>
+            </Link>
+          </View>
+        )}
+        <View
+          className={`mt-2 ml-auto w-2/6 border border-solid ${
+            meal ? "bg-secondary1" : "bg-negative1"
+          }`}
+        >
+          {modalVisit === true ? (
+            meal ? (
+              <Button
+                title="Replace"
+                color={"white"}
+                accessibilityLabel="Replace this meal"
+                onPress={() => {
+                  const eventData = {
+                    startDate: getApproxStartTime(title, new Date(startTime)),
+                    endDate: getApproxEndTime(title, new Date(endTime)),
+                    notes: `Meal ID: ${mealInMemory.idMeal}`,
+                    title: `${title}: ${mealInMemory.strMeal}`,
+                  };
+                  return Calendar.updateEventAsync(id, eventData)
+                    .then(() => {
+                      setMealInMemory(null);
+                      router.replace("/(tabs)/home");
+                    })
+                    .catch((err) => {
+                      console.log(err);
+                    });
+                }}
+              />
+            ) : (
+              <Button
+                title="Add"
+                color={"white"}
+                accessibilityLabel="Add the meal"
+                onPress={() => {
+                  const eventData = {
+                    startDate: getApproxStartTime(title, new Date(date)),
+                    endDate: getApproxEndTime(title, new Date(date)),
+                    notes: `Meal ID: ${mealInMemory.idMeal}`,
+                    title: `${title}: ${mealInMemory.strMeal}`,
+                  };
+                  return Calendar.createEventAsync(calendarSource.id, eventData)
+                    .then(() => {
+                      setMealInMemory(null);
+                      router.replace("/(tabs)/home");
+                    })
+                    .catch((err) => {
+                      console.log(err);
+                    });
+                }}
+              />
+            )
+          ) : meal ? (
+            <Button
+              title="Edit"
+              color={"white"}
+              accessibilityLabel="Edit this meal"
+              onPress={() => setEditModalVisible(true)}
             />
           ) : (
             <Button
               title="Add"
               color={"white"}
-              accessibilityLabel="Add the meal"
+              accessibilityLabel="Add a meal"
               onPress={() => {
-                const eventData = {
-                  startDate: getApproxStartTime(title, new Date(date)),
-                  endDate: getApproxEndTime(title, new Date(date)),
-                  notes: `Meal ID: ${mealInMemory.idMeal}`,
-                  title: `${title}: ${mealInMemory.strMeal}`,
-                };
-                return Calendar.createEventAsync(calendarSource.id, eventData)
-                  .then(() => {
-                    setMealInMemory(null);
-                    router.replace("/(tabs)/home");
-                  })
-                  .catch((err) => {
-                    console.log(err);
-                  });
+                setEventInMemory({ date, title });
+                setAddModalVisible(true);
               }}
             />
-          )
-        ) : meal ? (
-          <Button
-            title="Edit"
-            color={"white"}
-            accessibilityLabel="Edit this meal"
-            onPress={() => setEditModalVisible(true)}
-          />
-        ) : (
-          <Button
-            title="Add"
-            color={"white"}
-            accessibilityLabel="Add a meal"
-            onPress={() => {
-              setEventInMemory({ date, title });
-              setAddModalVisible(true);
-            }}
-          />
-        )}
+          )}
+        </View>
       </View>
       <EditEventModal modalProps={editModalProps} />
       <AddEventModal modalProps={addModalProps} />
